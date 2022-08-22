@@ -30,16 +30,29 @@ class Constants(BaseConstants):
         'control'
     ]
     APPS = [
-        'bret',
-        'cem',
-        'mpl',
-        'scl'
+        'BRET',
+        'CEM',
+        'MPL',
+        'SCL'
     ]
 
 
 
 class Subsession(BaseSubsession):
-    pass
+    def creating_session(self):
+        if self.round_number==1:
+            for p in self.session.get_participants():
+                treatments = Constants.TREATMENTS.copy()
+                random.shuffle(treatments)
+                p.vars['treatments'] = treatments
+                apps = Constants.APPS.copy()
+                random.shuffle(apps)
+                p.vars['appseq']  = apps
+
+        for p in self.get_players():
+            p.treatment = p.participant.vars['treatments'][self.round_number-1]
+            p.appseq = json.dumps(p.participant.vars['appseq'])
+
 
 
 class Group(BaseGroup):
@@ -47,4 +60,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    treatment = models.StringField()
+    appseq = models.StringField()
+    def get_apps(self):
+        return self.participant.vars['appseq']

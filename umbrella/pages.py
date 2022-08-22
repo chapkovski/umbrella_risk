@@ -1,50 +1,62 @@
 from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
+from . import gamepages
 
 
+# print(getattr(gamepages, 'BretPage').template_name)
 class _InnerTask(Page):
-    pass
+    num_task = None
+    type = None
+
+    def get_template_names(self):
+        apps = self.participant.vars['appseq']
+        app = apps[self.num_task - 1]
+        if self.type == 'task':
+            return [f'umbrella/tasks/{app}.html']
+        if self.type == 'instructions':
+            return [f'umbrella/instructions/{app}.html']
+        return super().get_template_names()
 
 
 class GeneralInstructions(_InnerTask):
-    pass
+    type = 'instructions'
 
 
 class GeneralTask(_InnerTask):
-    pass
+    type = 'task'
 
 
 class InstructionsP1(GeneralInstructions):
-    pass
+    num_task = 1
 
 
 class P1(GeneralTask):
-    pass
+    num_task = 1
 
 
 class InstructionsP2(GeneralInstructions):
-    pass
+    num_task = 2
 
 
 class P2(GeneralTask):
-    pass
+    num_task = 2
 
 
 class InstructionsP3(GeneralInstructions):
-    pass
+    num_task = 3
 
 
 class P3(GeneralTask):
-    pass
+    num_task = 3
 
 
 class InstructionsP4(GeneralInstructions):
-    pass
+    num_task = 4
 
 
 class P4(GeneralTask):
-    pass
+    num_task = 4
 
 
 page_sequence = [
