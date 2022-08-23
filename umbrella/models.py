@@ -39,7 +39,15 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
+    def bret_creating_session(self):
+        pass
+
     def creating_session(self):
+        self.bret_creating_session()
+        self.cem_creating_session()
+        self.mpl_creating_session()
+        self.scl_creating_session()
+
         if self.round_number==1:
             for p in self.session.get_participants():
                 treatments = Constants.TREATMENTS.copy()

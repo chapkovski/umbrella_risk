@@ -7,45 +7,77 @@ from .models import Constants
 
 
 class BRETPage:
-    template_name='JOPA'
+    @staticmethod
+    def get_form_fields(player):
+        return  [
+        'bret_bomb',
+        'bret_boxes_collected',
+        'bret_boxes_scheme',
+        'bret_bomb_row',
+        'bret_bomb_col',
+    ]
+
+    # jsonify BRET settings for Javascript application
+    @staticmethod
+    def vars_for_template(player):
+        reset = player.participant.vars.get('reset', False)
+        if reset:
+            del player.participant.vars['reset']
+        input = not Constants.devils_game if not Constants.dynamic else False
+        otree_vars = {
+            'reset': reset,
+            'input': input,
+            'random': Constants.random,
+            'dynamic': Constants.dynamic,
+            'num_rows': Constants.num_rows,
+            'num_cols': Constants.num_cols,
+            'feedback': Constants.feedback,
+            'undoable': Constants.undoable,
+            'box_width': Constants.box_width,
+            'box_height': Constants.box_height,
+            'time_interval': Constants.time_interval,
+        }
+        return {
+            'otree_vars': otree_vars,
+
+        }
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        player.participant.vars['reset'] = True
+        player.set_bret_payoff()
+
+
+
 
 class CEMPage:
     @staticmethod
     def get_form_fields(player):
-        # unzip list of form_fields from <cem_choices> list
         form_fields = [list(t) for t in zip(*player.participant.vars['cem_choices'])][1]
         return form_fields
 
-        # variables for template
-        # ----------------------------------------------------------------------------------------------------------------
 
     @staticmethod
     def vars_for_template(player):
 
         # specify info for progress bar
-        total = Constants.num_choices
+        total = Constants.num_cem_choices
         page = player.subsession.round_number
         progress = page / total * 100
 
 
         return {
             'choices': player.participant.vars['cem_choices'],
-            'task_number': player.participant.vars['task_number']
+
         }
 
-        # set payoff, determine consistency, and set switching row
-        # ----------------------------------------------------------------------------------------------------------------
 
 
     @staticmethod
     def before_next_page(player):
-        # self.participant.vars['task_to_pay'] = 'cem'
-        player.participant.vars['task_number'] = player.participant.vars['task_number'] + 1
-        # unzip indices and form fields from <cem_choices> list
-        round_number = player.subsession.round_number
         form_fields = [list(t) for t in zip(*player.participant.vars['cem_choices'])][1]
         indices = [list(t) for t in zip(*player.participant.vars['cem_choices'])][0]
-        index = indices[round_number - 1]
+
 
 
         # replace choices in <choices_made>
@@ -54,7 +86,7 @@ class CEMPage:
             player.participant.vars['cem_choices_made'][j - 1] = choice_i
 
         # set payoff
-        player.set_payoffs()
+        player.set_cem_payoffs()
         # determine consistency
         player.set_consistency()
         # set switching row
@@ -96,21 +128,16 @@ class MPLPage:
                 'lottery_a_hi': c(Constants.lottery_a_hi),
                 'lottery_b_lo': c(Constants.lottery_b_lo),
                 'lottery_b_hi': c(Constants.lottery_b_hi),
-                'task_number': player.participant.vars['task_number']
+
             }
 
     # set player's payoff
     # ----------------------------------------------------------------------------------------------------------------
     @staticmethod
     def before_next_page(player):
-        player.participant.vars['task_number'] = player.participant.vars['task_number'] + 1
-        # unzip indices and form fields from <mpl_choices> list
-        round_number = player.subsession.round_number
         form_fields = [list(t) for t in zip(*player.participant.vars['mpl_choices'])][1]
         indices = [list(t) for t in zip(*player.participant.vars['mpl_choices'])][0]
-        index = indices[round_number - 1]
 
-        # if choices are displayed sequentially
 
             # replace choices in <choices_made>
         for j, choice in zip(indices, form_fields):
@@ -118,35 +145,32 @@ class MPLPage:
             player.participant.vars['mpl_choices_made'][j - 1] = choice_i
 
         # set payoff
-        player.set_payoffs()
+        player.set_mpl_payoffs()
         # determine consistency
-        player.set_consistency()
+        player.set_mpl_consistency()
         # set switching row
-        player.set_switching_row()
+        player.set_mpl_switching_row()
 
 
 class SCLPage:
     @staticmethod
     def get_form_fields(player):
-        return ['lottery_choice']
+        return ['scl_lottery_choice']
 
-    # variables for template
-    # ----------------------------------------------------------------------------------------------------------------
+
     @staticmethod
     def vars_for_template(player):
         return {
             'lotteries': player.participant.vars['scl_lotteries'],
-            'prob_hi': "{0:.1f}".format(Constants.probability) + "%",
-            'prob_lo': "{0:.1f}".format(100 - Constants.probability) + "%",
+            'prob_hi': "{0:.1f}".format(Constants.scl_probability) + "%",
+            'prob_lo': "{0:.1f}".format(100 - Constants.scl_probability) + "%",
             'task_number': player.participant.vars['task_number']
         }
 
-    # set payoff
-    # ----------------------------------------------------------------------------------------------------------------
+
     @staticmethod
     def before_next_page(player):
-        player.set_payoffs()
-        player.participant.vars['task_number'] = player.participant.vars['task_number'] + 1
+        player.set_scl_payoffs()
 
 
 
