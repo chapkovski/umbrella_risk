@@ -26,9 +26,10 @@ class GeneralInstructions(_InnerTask):
 
 class GeneralTask(_InnerTask):
     type = 'task'
+    form_model = 'player'
     def _method_substitute(self, method):
         apps = self.participant.vars['appseq']
-        app = apps[self.num_task - 1]
+        app = apps[self.num_task - 1].lower()
         module = getattr(gamepages, app)
         return getattr(module, method)(self.player)
     def vars_for_template(self):

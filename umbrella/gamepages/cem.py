@@ -9,7 +9,6 @@ def get_form_fields(player):
     return form_fields
 
 
-
 def vars_for_template(player):
     # specify info for progress bar
     total = Constants.num_cem_choices
@@ -20,7 +19,6 @@ def vars_for_template(player):
         'choices': player.participant.vars['cem_choices'],
 
     }
-
 
 
 def before_next_page(player):
@@ -38,5 +36,3 @@ def before_next_page(player):
     cem.set_consistency(player)
     # set switching row
     cem.set_switching_row(player)
-
-
