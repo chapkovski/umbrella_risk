@@ -1,5 +1,6 @@
 from umbrella.configs.scl import Constants
 import random
+from otree.api import BaseConstants, Currency as c
 
 
 def creating_session(self):

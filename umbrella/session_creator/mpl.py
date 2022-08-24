@@ -1,5 +1,6 @@
 from umbrella.configs.mpl import Constants
 import random
+from otree.api import BaseConstants, Currency as cu
 
 
 def creating_session(self):
@@ -28,7 +29,7 @@ def creating_session(self):
 
             # create list corresponding to form_field variables including all choices
             # ----------------------------------------------------------------------------------------------------
-            form_fields = ['choice_' + str(k) for k in indices]
+            form_fields = ['mpl_choice_' + str(k) for k in indices]
 
             # create list of choices
             # ----------------------------------------------------------------------------------------------------
