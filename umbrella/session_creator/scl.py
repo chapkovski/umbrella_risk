@@ -6,6 +6,7 @@ from otree.api import BaseConstants, Currency as c
 
 
 def creating_session(self):
+    print('SCL created')
     for p in self.get_players():
 
         n = Constants.num_lotteries

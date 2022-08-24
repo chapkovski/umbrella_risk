@@ -3,6 +3,7 @@ import random
 from otree.api import BaseConstants, Currency as cu
 
 def creating_session(self):
+    print('CEM created')
     if self.round_number == 1:
 
         n = Constants.num_choices

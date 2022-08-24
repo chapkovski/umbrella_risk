@@ -8,8 +8,8 @@ from otree.api import (
     Currency as c,
     currency_range,
 )
-from configs.cem import Constants as CEM_Constants
-from configs.mpl import Constants as MPL_Constants
+from .configs.cem import Constants as CEM_Constants
+from .configs.mpl import Constants as MPL_Constants
 import random
 import json
 import itertools
