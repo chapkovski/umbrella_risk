@@ -3,6 +3,8 @@ import random
 from otree.api import BaseConstants, Currency as c
 
 
+
+
 def creating_session(self):
     for p in self.get_players():
 

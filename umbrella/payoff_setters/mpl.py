@@ -39,3 +39,28 @@ def set_payoffs(self):
     if self.participant.vars['task_to_pay'] != 'mpl':
         self.payoff = c(0)
 
+  # determine consistency
+    # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    def set_consistency(self):
+
+        n = Constants.num_choices
+
+        # replace A's by 1's and B's by 0's
+        self.participant.vars['mpl_choices_made'] = [
+            1 if j == 'A' else 0 for j in self.participant.vars['mpl_choices_made']
+        ]
+
+        # check for multiple switching behavior
+        for j in range(1, n):
+            choices = self.participant.vars['mpl_choices_made']
+            self.inconsistent = 1 if choices[j] > choices[j - 1] else 0
+            if self.inconsistent == 1:
+                break
+
+    # determine switching row
+    # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+    def set_switching_row(self):
+
+        # set switching point to row number of first 'B' choice
+        if self.inconsistent == 0:
+            self.switching_row = sum(self.participant.vars['mpl_choices_made']) + 1

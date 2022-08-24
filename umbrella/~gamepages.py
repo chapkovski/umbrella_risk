@@ -4,7 +4,7 @@
 from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
-
+from . import payoff_setters
 
 class BRETPage:
     @staticmethod
@@ -43,7 +43,7 @@ class BRETPage:
         }
 
     @staticmethod
-    def before_next_page(player, timeout_happened):
+    def before_next_page(player):
         player.participant.vars['reset'] = True
         player.set_bret_payoff()
 

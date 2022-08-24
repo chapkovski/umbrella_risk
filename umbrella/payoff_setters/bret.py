@@ -1,7 +1,7 @@
 from umbrella.configs.bret import Constants
 import random
 from otree.api import BaseConstants, Currency as cu
-def set_payoff(player):
+def set_payoffs(player):
     # determine round_result as (potential) payoff per round
     if player.bomb:
         player.payoff = cu(0)

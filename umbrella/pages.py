@@ -9,6 +9,7 @@ class _InnerTask(Page):
     num_task = None
     type = None
 
+
     def get_template_names(self):
         apps = self.participant.vars['appseq']
         app = apps[self.num_task - 1]
@@ -25,7 +26,17 @@ class GeneralInstructions(_InnerTask):
 
 class GeneralTask(_InnerTask):
     type = 'task'
-
+    def _method_substitute(self, method):
+        apps = self.participant.vars['appseq']
+        app = apps[self.num_task - 1]
+        module = getattr(gamepages, app)
+        return getattr(module, method)(self.player)
+    def vars_for_template(self):
+        return self._method_substitute('vars_for_template')
+    def before_next_page(self):
+        self._method_substitute('before_next_page')
+    def get_form_fields(self):
+        return self._method_substitute('get_form_fields')
 
 class InstructionsP1(GeneralInstructions):
     num_task = 1
