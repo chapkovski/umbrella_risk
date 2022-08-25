@@ -61,7 +61,7 @@ def creating_session(self):
             # randomly determine index/choice of binary decision to pay
             # ----------------------------------------------------------------------------------------------------
             p.participant.vars['cem_index_to_pay'] = random.choice(indices)
-            p.participant.vars['cem_choice_to_pay'] = 'choice_' + str(p.participant.vars['cem_index_to_pay'])
+            p.participant.vars['cem_choice_to_pay'] = 'cem_choice_' + str(p.participant.vars['cem_index_to_pay'])
 
             # randomize order of lotteries if <random_order = True>
             # ----------------------------------------------------------------------------------------------------

@@ -10,8 +10,8 @@ def get_form_fields(player):
 def vars_for_template(player):
     return {
         'lotteries': player.participant.vars['scl_lotteries'],
-        'prob_hi': "{0:.1f}".format(Constants.scl_probability) + "%",
-        'prob_lo': "{0:.1f}".format(100 - Constants.scl_probability) + "%",
+        'prob_hi': "{0:.1f}".format(Constants.probability) + "%",
+        'prob_lo': "{0:.1f}".format(100 - Constants.probability) + "%",
 
     }
 

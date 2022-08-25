@@ -9,10 +9,11 @@ class _InnerTask(Page):
     num_task = None
     type = None
 
-
-    def get_template_names(self):
+    def get_app(self):
         apps = self.participant.vars['appseq']
-        app = apps[self.num_task - 1]
+        return  apps[self.num_task - 1]
+    def get_template_names(self):
+        app = self.get_app()
         if self.type == 'task':
             return [f'umbrella/tasks/{app}.html']
         if self.type == 'instructions':
@@ -45,6 +46,7 @@ class InstructionsP1(GeneralInstructions):
 
 class P1(GeneralTask):
     num_task = 1
+
 
 
 class InstructionsP2(GeneralInstructions):

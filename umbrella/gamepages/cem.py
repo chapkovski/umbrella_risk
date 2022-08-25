@@ -11,11 +11,12 @@ def get_form_fields(player):
 
 def vars_for_template(player):
     # specify info for progress bar
-    total = Constants.num_cem_choices
+    total = Constants.num_choices
     page = player.subsession.round_number
     progress = page / total * 100
 
     return {
+        'enforce_consistency':Constants.enforce_consistency,
         'choices': player.participant.vars['cem_choices'],
 
     }

@@ -1,12 +1,124 @@
-{% extends "global/Page.html" %}
-{% load otree static %}
+{%  extends "global/Page.html"  %}
+{% load staticfiles otree  %}
+{% load i18n %}
 
-{% block title %}
-    MPL
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet">
+    <link href="{% static './global/custom.css' %}" rel="stylesheet">
+
 {% endblock %}
 
+
+{# ****************************************************************************************************************** #}
+{# *** SCRIPTS *** #}
+{# ****************************************************************************************************************** #}
+{% block scripts %}
+
+    {% if small_pies == True or large_pies == True %}
+        <script>
+            num_choices = {{ num_choices|json }};
+            lottery_a_hi = "{{ lottery_a_hi }}";
+            lottery_a_lo = "{{ lottery_a_lo }}";
+            lottery_b_hi = "{{ lottery_b_hi }}";
+            lottery_b_lo = "{{ lottery_b_lo }}";
+
+            one_choice = "{{ one_choice_per_page }}";
+            percentage = "{{ percentage }}";
+            large_pies = "{{ large_pies }}";
+        </script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="{% static 'mpl/js/pie_charts.js' %}"></script>
+    {% endif %}
+
+    {% if enforce_consistency == True %}
+        <script src="{% static 'mpl/js/consistency.js' %}"></script>
+    {% endif %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+
+    {% trans "Your Decision" %}
+
+
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
 {% block content %}
 
-    {% next_button %}
+    <div class="wrapper">
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Lottery Decisions: Choice List -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <div class="card">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="header">
+                        {% if small_pies == True %}
+                            <th class="pie-chart"></th>
+                        {% endif %}
+                        <th class="lottery-a">{% trans "Option A" %}</th>
+                        <th class="formfield"></th>
+                        <th class="lottery-b">{% trans "Option B" %}</th>
+                        {% if small_pies == True %}
+                            <th class="pie-chart"></th>
+                        {% endif %}
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for i,f,p in choices %}
+                        <tr>
+                            <!-- pie charts for A lotteries -->
+                            {% if small_pies == True %}
+                                <td class="pie-chart">
+                                    <div id="pies_a_{{i}}" class="pie-chart"></div>
+                                </td>
+                            {% endif %}
+
+                            <!-- A lotteries -->
+                            <td class="lottery-a">
+                                {{ lottery_a_hi }} {% trans "with a probability of " %}<br/><b>{{ p }}</b>,
+                                {{ lottery_a_lo }} {% trans "otherwise" %}
+                            </td>
+
+                            <!-- radio select form fields -->
+                            <td class="formfield">
+                                <input type="radio" name="{{ f }}" value="A" required>
+                                <input type="radio" name="{{ f }}" value="B" required>
+                            </td>
+
+                            <!-- B lotteries -->
+                            <td class="lottery-b">
+                                {{ lottery_b_hi }} {% trans "with a probability of " %}<b>{{ p }}</b>,
+                                {{ lottery_b_lo }} {% trans "otherwise" %}
+                            </td>
+
+                            <!-- pie charts for B lotteries -->
+                            {% if small_pies == True %}
+                                <td class="pie-chart">
+                                        <div id="pies_b_{{i}}" class="pie-chart"></div>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% next_button %}
+
+</div>
 
 {% endblock %}

@@ -1,0 +1,233 @@
+/* ****************************************************************************************************************** */
+/* *** General *** */
+/* ****************************************************************************************************************** */
+
+h2 {
+    text-align: center !important;
+}
+
+.page-header {
+    margin: 5px 0 5px;
+    padding: 0px;
+    border-bottom: none;
+}
+
+.otree-btn-next {
+    margin: 40px auto;
+    display: inherit;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.card-header {
+    font-weight: 600;
+    padding-left: 15px;
+}
+
+.wrapper,
+.alert {
+    min-width: 640px;
+    max-width: 720px;
+    margin: 0 auto 20px;
+}
+
+.info {
+    padding: 15px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.task-progress {
+    padding: 30px;
+    font-size: xx-large;
+    font-weight: 600;
+    text-align: center;
+}
+
+.task-progress .btn {
+    margin-top: 30px;
+}
+
+
+
+.spinner {
+    width: 0px;
+    height: 0px;
+    border: 100px solid;
+    border-radius: 50%;
+    border-top-color: red;
+    border-left-color: red;
+    border-bottom-color: green;
+    border-right-color: green;
+    text-align: center;
+    margin-left: 0%;
+    margin-block: 1cm;
+}
+
+.circle {
+    width: 0px;
+    height: 0px;
+    border: 100px solid;
+    border-radius: 50%;
+    border-top-color: red;
+    border-left-color: red;
+    border-bottom-color: green;
+    border-right-color: green;
+    text-align: center;
+    margin-left: 0%;
+    margin-block: 1cm;
+}
+
+.pie {
+    margin-left: 0%;
+    margin-block: 1cm;
+    width: 200px;
+}
+
+.pie circle {
+    fill: gray;
+    stroke-width: 10;
+    stroke-dasharray: 80 120
+}
+
+
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table,
+th,
+td {
+    /* border: 1px solid black; */
+    align-self: center;
+}
+
+th,
+td {
+    padding: 10px;
+}
+/* ****************************************************************************************************************** */
+/* *** Instructions *** */
+/* ****************************************************************************************************************** */
+
+.instructions {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 245, 0.25);
+    margin: 40px auto;
+    padding: 20px 20px 10px 20px;
+    text-align: left;
+
+    position: relative;
+    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.05) inset;
+    -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.05) inset;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.05) inset;
+
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+/* ****************************************************************************************************************** */
+/* *** Survey *** */
+/* ****************************************************************************************************************** */
+
+.question {
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.radio-select {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.radio {
+    width: 70px;
+    text-align: center;
+    display: inline-block;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.radio input[type="radio"] {
+    float: none;
+    margin: 0;
+    padding: 0;
+}
+
+.label {
+    color: #333333;
+    font-size: small;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.labels-top {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.labels-bottom {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.label-top {
+    width: 70px;
+    font-size: smaller;
+    font-style: italic;
+    display: inline-block;
+    text-align: center;
+}
+
+.value-low {
+    width: 245px;
+    font-size: smaller;
+    font-style: italic;
+    display: inline-block;
+    text-align: left;
+    padding-left: 15px;
+}
+
+.value-high {
+    width: 245px;
+    font-size: smaller;
+    font-style: italic;
+    display: inline-block;
+    text-align: right;
+    padding-right: 15px;
+}
+
+
+/* ****************************************************************************************************************** */
+/* *** Colors *** */
+/* ****************************************************************************************************************** */
+.red {
+    color: rgb(180, 50, 50);
+}
+
+.green {
+    color: rgb(80, 150, 70);
+}
+
+.blue {
+    color: rgb(70, 97, 150);
+}
+
+.orange {
+    color: rgb(220, 170, 80);
+}
+
+
+/* ****************************************************************************************************************** */
+/* *** WaitPages *** */
+/* ****************************************************************************************************************** */
+.progress {
+    margin-top: 30px;
+}
+

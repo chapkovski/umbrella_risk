@@ -109,15 +109,15 @@ class Player(BasePlayer):
     ##############################MPL###############################
 
     for j in range(1, MPL_Constants.num_choices + 1):
-        locals()['mcl_choice_' + str(j)] = models.StringField()
+        locals()['mpl_choice_' + str(j)] = models.StringField()
     del j
 
 
-    mcl_random_draw = models.IntegerField()
-    mcl_choice_to_pay = models.StringField()
-    mcl_option_to_pay = models.StringField()
-    mcl_inconsistent = models.IntegerField()
-    mcl_switching_row = models.IntegerField()
+    mpl_random_draw = models.IntegerField()
+    mpl_choice_to_pay = models.StringField()
+    mpl_option_to_pay = models.StringField()
+    mpl_inconsistent = models.IntegerField()
+    mpl_switching_row = models.IntegerField()
 
 
     ##############################END OF MPL###############################

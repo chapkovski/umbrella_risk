@@ -1,8 +1,34 @@
 {% extends "otree/Page.html" %}
+{% load i18n %}
 {% load otree static %}
 
 {% block global_styles  %}
 {% endblock %}
 
 {% block global_scripts  %}
+{% endblock %}
+
+{% block body_main %}
+    <h1>Treatment: {{ player.treatment }}; Task: {{ view.get_app }}</h1>
+    <div class="otree-body container">
+        <h2 class="otree-title page-header">{% block title %}{% endblock %}</h2>
+        {% if view.remaining_timeout_seconds != None %}
+            {% include 'otree/includes/TimeLimit.html' with form_element_id="form" %}
+        {% endif %}
+        {% if form.errors %}
+            <div class="otree-form-errors alert alert-danger">
+              {% blocktrans trimmed %}Please fix the errors in the form.{% endblocktrans %}
+              {{ form.non_field_errors }}
+            </div>
+        {% endif %}{% if js_vars|default:False %}<script>var js_vars = {{ js_vars|json }};</script>{% endif %}
+        <form class="otree-form" method="post" role="form" id="form" autocomplete="off">{% csrf_token %}
+            <div class="_otree-content">{% block content %}{% endblock %}</div>
+        </form>
+        <br/>
+        {# need the default:False for projects with old MTurkLandingPage #}
+        {% if view.is_debug|default:False %}
+            <br>
+            {% include 'otree/includes/debug_info.html' %}
+        {% endif %}
+    </div>
 {% endblock %}
