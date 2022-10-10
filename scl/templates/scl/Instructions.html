@@ -1,0 +1,45 @@
+{{ extends "global/Page.html" }}
+{{ load staticfiles otree }}
+{{ load i18n }}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{{ block styles }}
+    <link href="{{ static 'scl/css/custom.css' }}" rel="stylesheet"/>
+{{ endblock }}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{{ block title }}
+    <span>{% trans "Task" %} {{ task_number }}</span>:
+    {{ trans "Instructions" }}
+{{ endblock }}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{{ block content }}
+
+    <div class="wrapper instructions">
+        <p>
+            {{ blocktrans trimmed }}
+                In {% trans "Task" %} {{ task_number }} you face six different lotteries. Each lottery has
+                two possible outcomes (Event A or Event B). Either of the two events occurs with a 50% probability.
+            {{ endblocktrans }}
+        </p>
+        <p>
+            {{ blocktrans trimmed }}
+                Your task is to indicate which of the six lotteries you would like to play. For the lottery that
+                you choose, a random draw at the end of the experiment determines which event, Event A or Event
+                B, occurs. This randomly drawn event determines your payment at the end of the experiment.
+            {{ endblocktrans }}
+        </p>
+    </div>
+
+    {{ next_button }}
+{{ endblock }}

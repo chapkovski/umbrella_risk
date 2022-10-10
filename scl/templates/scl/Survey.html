@@ -1,0 +1,182 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'scl/css/custom.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    <span class="orange">{% trans "Task 'orange'" %}</span>:
+    {% trans "Your Decision" %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+
+    <div class="wrapper">
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Table - Lottery Choice -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <div class="card">
+            <table class="table">
+                <thead>
+                    <tr class="header1">
+                        <!-- Lottery Number (Counter) -->
+                        <th></th>
+                        <th></th>
+
+                        <!-- A lotteries -->
+                        <th colspan="2">{% trans "Event A" %}</th>
+                        <th></th>
+
+                        <!-- B lotteries -->
+                        <th colspan="2">{% trans "Event B" %}</th>
+                        <th></th>
+
+                        <!-- radio select form fields -->
+                        <th></th>
+                    </tr>
+                    <tr class="header2">
+                        <!-- Lottery Number (Counter) -->
+                        <th>{% trans "No." %}</th>
+                        <th></th>
+
+                        <!-- A lotteries -->
+                        <th class="prob">{% trans "Prob." %}</th>
+                        <th>{% trans "Payoff" %}</th>
+                        <th></th>
+
+                        <!-- B lotteries -->
+                        <th class="prob">{% trans "Prob." %}</th>
+                        <th>{% trans "Payoff" %}</th>
+                        <th></th>
+
+                        <!-- radio select form fields -->
+                        <th>{% trans "Your Choice" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i,lo,hi in lotteries %}
+                        <tr>
+                            <!-- Lottery Number (Counter) -->
+                            <td>{{ forloop.counter }}</td>
+                            <td></td>
+
+                            <!-- A lotteries -->
+                            <td class="prob">{{ prob_lo }}</td>
+                            <td>{{ lo }}</td>
+                            <td></td>
+
+                            <!-- B lotteries -->
+                            <td class="prob">{{ prob_hi }}</td>
+                            <td>{{ hi }}</td>
+                            <td></td>
+
+                            <!-- radio select form fields -->
+                            <td>
+                                {% if choice == forloop.counter %}
+                                    <input type="radio" checked>
+                                {% elif choice != forloop.counter %}
+                                    <input type="radio" disabled>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Survey Questions -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <br/><br/>
+        <div class="card">
+            <div class="card-header">
+                {% blocktrans trimmed %}
+                    Please answer the following questions:
+                {% endblocktrans %}
+            </div>
+            <form>
+                <div class="question">
+                    {% blocktrans trimmed %}
+                        On a scale from 1 (not at all risky) to 7 (very risky):<br/>
+                        How risky do you consider your own decision (indicated above) to be?
+                    {% endblocktrans %}
+                </div>
+                <div class="labels-top">
+                    {% for j in "1234567" %}
+                        <div class="label-top">
+                            {{ j }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="radio-select">
+                    {% for j in "1234567" %}
+                        <div class="radio">
+                            <input type="radio" name="riskiness" value="{{ j }}" required>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="labels-bottom">
+                    <div class="value-low">
+                        {% trans "not risky at all" %}
+                    </div>
+                    <div class="value-high">
+                        {% trans "very risky" %}
+                    </div>
+                </div>
+                <div>
+                    <hr/>
+                </div>
+                <div class="question">
+                    {% blocktrans trimmed %}
+                        On a scale from 1 (not at all confident) to 7 (very confident):<br/>
+                        How confident do you feel with your decision indicated above?
+                    {% endblocktrans %}
+                </div>
+                <div class="labels-top">
+                    {% for j in "1234567" %}
+                        <div class="label-top">
+                            {{ j }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="radio-select">
+                    {% for j in "1234567" %}
+                        <div class="radio">
+                            <input type="radio" name="confidence" value="{{ j }}" required>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="labels-bottom">
+                    <div class="value-low">
+                        {% trans "not confident at all" %}
+                    </div>
+                    <div class="value-high">
+                        {% trans "very confident" %}
+                    </div>
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% next_button %}
+
+{% endblock %}

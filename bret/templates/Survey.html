@@ -1,0 +1,284 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'bret/css/bret.css' %}" rel="stylesheet"/>
+    <link href="{% static 'bret/css/custom.css' %}" rel="stylesheet"/>
+    <link href="{% static 'bret/css/fontawesome-all.css' %}" rel="stylesheet"/>
+    <style type="text/css">.ng-cloak{display:none !important;}</style>
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** SCRIPTS *** #}
+{# ****************************************************************************************************************** #}
+{% block scripts %}
+    <script src="{% static 'bret/js/angular.min.js' %}"></script>
+    <script src="{% static 'bret/js/bret.js' %}"></script>
+    <script>(function(angular){
+        var oVars = {{ otree_vars|json }};
+        try{
+            // get bomb task module
+            angular.module("bombTask")
+
+            // reset properties
+            .constant("RESET", oVars.reset)
+
+            // card size properties
+            .constant("WIDTH", oVars.box_width)
+            .constant("HEIGHT", oVars.box_height)
+
+            // matrix size properties
+            .constant("NUM_ROWS", oVars.num_rows)
+            .constant("NUM_COLS", oVars.num_cols)
+
+            // dynamic mode properties
+            .constant("RANDOM", oVars.random)
+            .constant("DYNAMIC", oVars.dynamic)
+            .constant("INTERVAL", oVars.time_interval)
+
+            // visibility properties
+            .constant("FEEDBACK", oVars.feedback)
+
+            // behaviour properties
+            .constant("UNDOABLE", oVars.undoable)
+            .constant("INPUT", oVars.input)
+
+            // state
+            .constant("STATE", oVars.bret_state);
+            
+        } catch(e){ console.error("Could not pass server-side settings to bomb task app!");}
+    })(angular);
+    </script>
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    <span class="red">{% trans "Task 'red'" %}</span>:
+    {% trans "Your Decision" %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+    <head>
+        <meta HTTP-EQUIV="Pragma"; CONTENT="no-cache">
+        <meta HTTP-EQUIV="Expires"; CONTENT="-1";>
+    </head>
+    <div class="wrapper">
+        <div
+            id="bomb-task"
+            class="ng-cloak"
+            data-ng-app="bombTask"
+            data-ng-controller="BombTaskController as bombTaskController">
+
+            <div class="matrix">
+
+                <div
+                    class="row"
+                    data-ng-repeat="(row,columns) in bombTaskController.matrix">
+                    <div
+                        class="col"
+                        data-ng-repeat="(col,column) in columns">
+                        <div
+                            class="holder"
+                            data-card="column"
+                            data-card-is-active="column.$$active"
+                            data-card-on-toggle="bombTaskController.update(column,state)"
+                            data-ng-class="{
+                                'resolved':bombTaskController.resolved && column.$$resolved,
+                                'bomb':bombTaskController.resolved && bombTaskController.isBomb(column)
+                            }"
+                            data-ng-style="{
+                                'width':bombTaskController.width,
+                                'height':bombTaskController.height
+                            }"
+                            data-card-is-clickable="!bombTaskController.dynamic && !bombTaskController.input"
+                            data-card-is-disabled="(!bombTaskController.undoable && column.$$active) || !bombTaskController.started || bombTaskController.stopped">
+
+                            <span
+                                class="front"
+                                data-ng-style="{
+                                    'width':bombTaskController.width,
+                                    'height':bombTaskController.height
+                                }">
+                                <i class="icon fas fa-check"></i>
+                            </span>
+                            <span
+                                class="back"
+                                data-ng-style="{
+                                    'width':bombTaskController.width,
+                                    'height':bombTaskController.height
+                                }">
+                                <i class="icon fas fa-dollar-sign"></i>
+                                <i class="icon fas fa-bomb"></i>
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="counter">
+
+                    <div data-ng-if="!bombTaskController.input">
+                        <strong>
+                            {% trans "No. of boxes collected:" %}
+                        </strong>
+                        <span data-ng-bind="bombTaskController.getCollectedBoxes()"></span>
+                        <br>
+                        <strong>
+                            {% trans "No. of boxes remaining:" %}
+                        </strong>
+                        <span data-ng-bind="bombTaskController.getRemainingBoxes()"></span>
+                    </div>
+                    <div data-ng-if="bombTaskController.input">
+                        <label>
+                            {% trans "No. of boxes to collect:" %}
+
+                            <input
+                                min="0"
+                                type="number"
+                                class="form-control"
+                                data-ng-change="bombTaskController.select()"
+                                data-ng-disabled="bombTaskController.stopped"
+                                data-ng-model="bombTaskController.input_value"
+                                max="bombTaskController.getTotalBoxes()"/>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <input type="hidden" name="bomb" id="bomb" data-ng-value="bombTaskController.form.bomb"/>
+            <input type="hidden" name="boxes_scheme" id="boxes_scheme" data-ng-value="bombTaskController.form.boxes_scheme"/>
+            <input type="hidden" name="boxes_collected" id="boxes_collected" data-ng-value="bombTaskController.form.boxes_collected"/>
+            <input type="hidden" name="bomb_row" id="bomb_row" value="" data-ng-value="bombTaskController.form.bomb_row"/>
+            <input type="hidden" name="bomb_col" id="bomb_col" value="" data-ng-value="bombTaskController.form.bomb_col"/>
+
+            <script id="/card.html" type="text/ng-template">
+                <a
+                    class="card"
+                    data-ng-transclude=""
+                    href="javascript:void(0)"
+                    data-ng-click="cardController.toggle()"
+                    data-ng-class="{
+                        'active':cardController.isActive,
+                        'disabled':cardController.isDisabled,
+                        'clickable':cardController.isClickable
+                    }">
+                </a>
+            </script>
+
+        </div>
+
+        <script type="text/javascript">
+           function (refreshMe) {
+              var newLoc = "";
+              var _now = new Date();
+              var _prev = 0;
+              var timeRe = /(&*)time=(\d+)(&|$)/;
+              if (timeRe.exec(location.search)) {
+                 _prev = RegExp.$2;
+                 newLoc = location.href.replace(timeRe, RegExp.$1);
+                 var lastChar = newLoc.charAt(newLoc.length - 1);
+                 newLoc += ((lastChar == "&") || (lastChar == "?")) ? "time=" : "&time="
+                 if (parseInt(_prev) < _now.getTime() - 5000) {
+                    location.replace(newLoc + _now.getTime().toString());
+                 }
+              } else {
+                 newLoc = (location.href.indexOf("?") == -1) ? location.href + "?time=" : location.href + "&time=";
+                 location.replace(newLoc + _now.getTime().toString());
+              }
+           }window.onload=refreshMe;
+        </script>
+
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Survey Questions -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <br/><br/>
+        
+        <div class="card">
+            <div class="card-header">
+                {% blocktrans trimmed %}
+                    Please answer the following questions:
+                {% endblocktrans %}
+            </div>
+            <form>
+                <div class="question">
+                    {% blocktrans trimmed %}
+                        On a scale from 1 (not at all risky) to 7 (very risky):<br/>
+                        How risky do you consider your own decision (indicated above) to be?
+                    {% endblocktrans %}
+                </div>
+                <div class="labels-top">
+                    {% for j in "1234567" %}
+                        <div class="label-top">
+                            {{ j }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="radio-select">
+                    {% for j in "1234567" %}
+                        <div class="radio">
+                            <input type="radio" name="riskiness" value="{{ j }}" required>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="labels-bottom">
+                    <div class="value-low">
+                        {% trans "not risky at all" %}
+                    </div>
+                    <div class="value-high">
+                        {% trans "very risky" %}
+                    </div>
+                </div>
+                <div>
+                    <hr/>
+                </div>
+                <div class="question">
+                    {% blocktrans trimmed %}
+                        On a scale from 1 (not at all confident) to 7 (very confident):<br/>
+                        How confident do you feel with your decision indicated above?
+                    {% endblocktrans %}
+                </div>
+                <div class="labels-top">
+                    {% for j in "1234567" %}
+                        <div class="label-top">
+                            {{ j }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="radio-select">
+                    {% for j in "1234567" %}
+                        <div class="radio">
+                            <input type="radio" name="confidence" value="{{ j }}" required>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="labels-bottom">
+                    <div class="value-low">
+                        {% trans "not confident at all" %}
+                    </div>
+                    <div class="value-high">
+                        {% trans "very confident" %}
+                    </div>
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+            </form>
+        </div>
+    </div>
+    {% next_button %}
+{% endblock %}

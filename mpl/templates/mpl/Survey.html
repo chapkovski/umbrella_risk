@@ -1,0 +1,204 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** SCRIPTS *** #}
+{# ****************************************************************************************************************** #}
+{% block scripts %}
+    {% if Constants.small_pies == True or Constants.large_pies == True %}
+        <script>
+            num_choices = {{ Constants.num_choices|json }};
+            lottery_a_hi = "{{ lottery_a_hi }}";
+            lottery_a_lo = "{{ lottery_a_lo }}";
+            lottery_b_hi = "{{ lottery_b_hi }}";
+            lottery_b_lo = "{{ lottery_b_lo }}";
+
+            one_choice = "{{ Constants.one_choice_per_page }}";
+            percentage = "{{ Constants.percentage }}";
+            large_pies = "{{ Constants.large_pies }}";
+        </script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="{% static 'mpl/js/pie_charts.js' %}"></script>
+    {% endif %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    <span class="blue">{% trans "Task 'blue'" %}</span>:
+    {% trans "Your Decision" %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+
+    <div class="wrapper">
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Table - Lottery Decisions (Option A/B) -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <div class="card">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="header">
+                        {% if Constants.small_pies == True %}
+                            <th class="pie-chart"></th>
+                        {% endif %}
+                        <th class="lottery-a">{% trans "Option A" %}</th>
+                        <th class="formfield"></th>
+                        <th class="lottery-b">{% trans "Option B" %}</th>
+                        {% if Constants.small_pies == True %}
+                            <th class="pie-chart"></th>
+                        {% endif %}
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for i, p, choice in choices %}
+                        <tr>
+                            <!-- pie charts for A lotteries -->
+                            {% if Constants.small_pies == True %}
+                                <td class="pie-chart">
+                                    {% with j=i|stringformat:"s" %}
+                                        {% with pies_a="pie_a_"|add:j %}
+                                            <div id="{{ pies_a }}" class="pie-chart"></div>
+                                        {% endwith %}
+                                    {% endwith %}
+                                </td>
+                            {% endif %}
+
+                            <!-- A lotteries -->
+                            <td class="lottery-a">
+                                {{ lottery_a_hi }} {% trans "with a probability of " %}<br/> <b>{{ p }}</b>,
+                                {{ lottery_a_lo }} {% trans "otherwise" %}
+                            </td>
+
+                            <!-- radio select form fields -->
+                            <td class="formfield">
+                                {% if choice == 1 %}
+                                    <input type="radio" checked >
+                                    <input type="radio" disabled>
+                                {% elif choice == 0 %}
+                                    <input type="radio" disabled>
+                                    <input type="radio" checked>
+                                {% endif %}
+                            </td>
+
+                            <!-- B lotteries -->
+                            <td class="lottery-b">
+                                {{ lottery_b_hi }} {% trans "with a probability of " %}<b>{{ p }}</b>,
+                                {{ lottery_b_lo }} {% trans "otherwise" %}
+                            </td>
+
+                            <!-- pie charts for B lotteries -->
+                            {% if Constants.small_pies == True %}
+                                <td class="pie-chart">
+                                    {% with j=i|stringformat:"s" %}
+                                    {% with pies_b="pie_b_"|add:j %}
+                                        <div id="{{ pies_b }}" class="pie-chart"></div>
+                                    {% endwith %}
+                                    {% endwith %}
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Survey Questions -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <br/><br/>
+        <div class="card">
+            <div class="card-header">
+                {% blocktrans trimmed %}
+                    Please answer the following questions:
+                {% endblocktrans %}
+            </div>
+            <form>
+                <div class="question">
+                    {% blocktrans trimmed %}
+                        On a scale from 1 (not at all risky) to 7 (very risky):<br/>
+                        How risky do you consider your own decision (indicated above) to be?
+                    {% endblocktrans %}
+                </div>
+                <div class="labels-top">
+                    {% for j in "1234567" %}
+                        <div class="label-top">
+                            {{ j }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="radio-select">
+                    {% for j in "1234567" %}
+                        <div class="radio">
+                            <input type="radio" name="riskiness" value="{{ j }}" required>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="labels-bottom">
+                    <div class="value-low">
+                        {% trans "not risky at all" %}
+                    </div>
+                    <div class="value-high">
+                        {% trans "very risky" %}
+                    </div>
+                </div>
+                <div>
+                    <hr/>
+                </div>
+                <div class="question">
+                    {% blocktrans trimmed %}
+                        On a scale from 1 (not at all confident) to 7 (very confident):<br/>
+                        How confident do you feel with your decision indicated above?
+                    {% endblocktrans %}
+                </div>
+                <div class="labels-top">
+                    {% for j in "1234567" %}
+                        <div class="label-top">
+                            {{ j }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="radio-select">
+                    {% for j in "1234567" %}
+                        <div class="radio">
+                            <input type="radio" name="confidence" value="{{ j }}" required>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="labels-bottom">
+                    <div class="value-low">
+                        {% trans "not confident at all" %}
+                    </div>
+                    <div class="value-high">
+                        {% trans "very confident" %}
+                    </div>
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% next_button %}
+
+{% endblock %}

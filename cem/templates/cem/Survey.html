@@ -1,0 +1,154 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load i18n %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'cem/css/custom.css' %}" rel="stylesheet">
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    <span class="green">{% trans "Task 'green'" %}</span>:
+    {% trans "Your Decision" %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+
+    <div class="wrapper">
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Table - Lottery Decisions (Option A/B) -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <div class="card">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="header">
+                        <th class="lottery">{% trans "Option A" %}</th>
+                        <th class="formfield"></th>
+                        <th class="sure_payoff">{% trans "Option B" %}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for p,hi,lo,sp,choice in choices %}
+                        <tr>
+                            <!-- lotteries -->
+                            <td class="lottery">
+                                {{ hi }} {% trans "with a probability of " %}50%,<br/>
+                                {{ lo }} {% trans "otherwise" %}
+                            </td>
+
+                            <!-- radio select form fields -->
+                            <td class="formfield">
+                                {% if choice == 1 %}
+                                    <input type="radio" checked >
+                                    <input type="radio" disabled>
+                                {% elif choice == 0 %}
+                                    <input type="radio" disabled>
+                                    <input type="radio" checked>
+                                {% endif %}
+                            </td>
+
+                            <!-- sure payoff -->
+                            <td class="sure_payoff">
+                                <b>{{ sp }}</b> {% trans "with a probability of " %}100%<br/>
+                                {% trans "(sure payoff)" %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Survey Questions -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <br/><br/>
+        <div class="card">
+            <div class="card-header">
+                {% blocktrans trimmed %}
+                    Please answer the following questions:
+                {% endblocktrans %}
+            </div>
+            <form>
+                <div class="question">
+                    {% blocktrans trimmed %}
+                        On a scale from 1 (not at all risky) to 7 (very risky):<br/>
+                        How risky do you consider your own decision (indicated above) to be?
+                    {% endblocktrans %}
+                </div>
+                <div class="labels-top">
+                    {% for j in "1234567" %}
+                        <div class="label-top">
+                            {{ j }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="radio-select">
+                    {% for j in "1234567" %}
+                        <div class="radio">
+                            <input type="radio" name="riskiness" value="{{ j }}" required>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="labels-bottom">
+                    <div class="value-low">
+                        {% trans "not risky at all" %}
+                    </div>
+                    <div class="value-high">
+                        {% trans "very risky" %}
+                    </div>
+                </div>
+                <div>
+                    <hr/>
+                </div>
+                <div class="question">
+                    {% blocktrans trimmed %}
+                        On a scale from 1 (not at all confident) to 7 (very confident):<br/>
+                        How confident do you feel with your decision indicated above?
+                    {% endblocktrans %}
+                </div>
+                <div class="labels-top">
+                    {% for j in "1234567" %}
+                        <div class="label-top">
+                            {{ j }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="radio-select">
+                    {% for j in "1234567" %}
+                        <div class="radio">
+                            <input type="radio" name="confidence" value="{{ j }}" required>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="labels-bottom">
+                    <div class="value-low">
+                        {% trans "not confident at all" %}
+                    </div>
+                    <div class="value-high">
+                        {% trans "very confident" %}
+                    </div>
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% next_button %}
+
+{% endblock %}

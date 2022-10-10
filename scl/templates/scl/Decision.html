@@ -1,0 +1,130 @@
+{{ extends "global/Page.html" }}
+{{ load staticfiles otree }}
+{{ load i18n }}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'scl/css/custom.css' %}" rel="stylesheet">
+    <link href="{{ static './global/custom.css' }}" rel="stylesheet">
+
+{% endblock %}
+
+{{ block script}}
+    <script>
+        const spinner=document.getElementById('spinner');
+        let angle=0;
+        const rotate=function(element,step,delay)
+        {
+            const _rotate=function()
+            {
+            angle+=step;
+            angle%=360;
+            element.style.transform=`rotate(${angle}deg)`;
+            };
+            const intval=window.setInterval(_rotate,delay);
+            return intval;
+        };
+        {
+            rotate(spinner, 50, 10);
+        };
+    </script>
+{{ endblock }}
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    <span>{% trans "Task" %} {{ task_number }}</span>:
+    {% trans "Your Decision" %}
+    <table class="center" width = '40%' style="position: fixed; top: 15px;left: 40px ">
+        <tr >
+            <td width = 10% >
+               <h1> &rarr;</h1> 
+            </td>
+            <td  width = 90%>
+                <div class="spinner" id="spinner"></div>
+            </td>
+        </tr>
+    </table>
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{{ block content }}
+    <div class="wrapper">
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Table - Lottery Choice -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <div class="card">
+            <table class="table">
+                <thead>
+                    <tr class="header1">
+                        <!-- Lottery Number (Counter) -->
+                        <th></th>
+                        <th></th>
+
+                        <!-- A lotteries -->
+                        <th colspan="2">{{ trans "Event A" }}</th>
+                        <th></th>
+
+                        <!-- B lotteries -->
+                        <th colspan="2">{{ trans "Event B" }}</th>
+                        <th></th>
+
+                        <!-- radio select form fields -->
+                        <th></th>
+                    </tr>
+                    <tr class="header2">
+                        <!-- Lottery Number (Counter) -->
+                        <th>{{ trans "No." }}</th>
+                        <th></th>
+
+                        <!-- A lotteries -->
+                        <th class="prob">{{ trans "Prob." }}</th>
+                        <th>{{ trans "Payoff" }}</th>
+                        <th></th>
+
+                        <!-- B lotteries -->
+                        <th class="prob">{{ trans "Prob." }}</th>
+                        <th>{{ trans "Payoff" }}</th>
+                        <th></th>
+
+                        <!-- radio select form fields -->
+                        <th>{{ trans "Your Choice" }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ for i,lo,hi in lotteries }}
+                        <tr>
+                            <!-- Lottery Number (Counter) -->
+                            <td>{{ forloop.counter }}</td>
+                            <td></td>
+
+                            <!-- A lotteries -->
+                            <td class="prob">{{ prob_lo }}</td>
+                            <td>{{ lo }}</td>
+                            <td></td>
+
+                            <!-- B lotteries -->
+                            <td class="prob">{{ prob_hi }}</td>
+                            <td>{{ hi }}</td>
+                            <td></td>
+
+                            <!-- radio select form fields -->
+                            <td><input type="radio" name="lottery_choice" value="{{ i }}" required></td>
+                        </tr>
+                    {{ endfor }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{ next_button }}
+
+{{ endblock }}

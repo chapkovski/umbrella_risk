@@ -1,0 +1,62 @@
+/* ****************************************************************************************************************** */
+/* *** Decision/Results Table *** */
+/* ****************************************************************************************************************** */
+
+.table>thead>tr>th,
+.table>tbody>tr>td {
+    vertical-align: middle;
+    border: none;
+}
+
+.header {
+    background-color: #f1f1f1;
+    border-bottom: 1pt solid #d2d2d2;
+}
+
+.pie-chart {
+    min-width: 40px;
+    margin: 0 auto;
+}
+
+.highcharts-container {
+    margin: 0 auto;
+}
+
+.formfield {
+    min-width: 80px;
+    text-align: center;
+}
+
+.lottery-a {
+    min-width: 200px;
+    max-width: 200px;
+    text-align: right;
+}
+
+.lottery-b {
+    min-width: 200px;
+    max-width: 200px;
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.info {
+    padding: 15px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+.btn-primary {
+    margin-bottom: 10px;
+}
+
+.btn-success[disabled], .btn-primary[disabled] {
+    opacity: 1;
+}
+
+input[type="radio"]{
+    margin: 7px;
+}
+

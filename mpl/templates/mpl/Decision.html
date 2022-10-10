@@ -1,0 +1,154 @@
+{{ extends "global/Page.html" }}
+{{ load staticfiles otree }}
+{{ load i18n }}
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{{ block styles }}
+    <link href="{{ static 'mpl/css/custom.css' }}" rel="stylesheet">
+    <link href="{{ static './global/custom.css' }}" rel="stylesheet">
+
+{{ endblock }}
+
+
+{# ****************************************************************************************************************** #}
+{# *** SCRIPTS *** #}
+{# ****************************************************************************************************************** #}
+{{ block scripts }}
+    <script>
+        const spinner=document.getElementById('spinner');
+        let angle=0;
+        const rotate=function(element,step,delay)
+        {
+            const _rotate=function()
+            {
+            angle+=step;
+            angle%=360;
+            element.style.transform=`rotate(${angle}deg)`;
+            };
+            const intval=window.setInterval(_rotate,delay);
+            return intval;
+        };
+        {
+            rotate(spinner, 50, 10);
+        };
+    </script>
+    {{ if Constants.small_pies == True or Constants.large_pies == True }}
+        <script>
+            num_choices = {{ Constants.num_choices|json }};
+            lottery_a_hi = "{{ lottery_a_hi }}";
+            lottery_a_lo = "{{ lottery_a_lo }}";
+            lottery_b_hi = "{{ lottery_b_hi }}";
+            lottery_b_lo = "{{ lottery_b_lo }}";
+
+            one_choice = "{{ Constants.one_choice_per_page }}";
+            percentage = "{{ Constants.percentage }}";
+            large_pies = "{{ Constants.large_pies }}";
+        </script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="{{ static 'mpl/js/pie_charts.js' }}"></script>
+    {{ endif }}
+
+    {{ if Constants.enforce_consistency == True }}
+        <script src="{{ static 'mpl/js/consistency.js' }}"></script>
+    {{ endif }}
+{{ endblock }}
+
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{{ block title }}
+    <span>{% trans "Task" %} {{ task_number }}</span>:
+    {{ trans "Your Decision" }}
+        <html>
+            <body>
+                    <table class="center" width = '40%' style="position: fixed; top: 15px;left: 40px ">
+                        <tr >
+                            <td width = 10% >
+                               <h1> &rarr;</h1> 
+                            </td>
+                            <td  width = 90%>
+                                <div class="spinner" id="spinner"></div>
+                            </td>
+                        </tr>
+                    </table>
+            </body>
+            </html>
+
+{{ endblock }}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{{ block content }}
+
+    <div class="wrapper">
+
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <!-- Lottery Decisions: Choice List -->
+        <!-- ------------------------------------------------------------------------------------------------------- -->
+        <div class="card">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="header">
+                        {{ if Constants.small_pies == True }}
+                            <th class="pie-chart"></th>
+                        {{ endif }}
+                        <th class="lottery-a">{{ trans "Option A" }}</th>
+                        <th class="formfield"></th>
+                        <th class="lottery-b">{{ trans "Option B" }}</th>
+                        {{ if Constants.small_pies == True }}
+                            <th class="pie-chart"></th>
+                        {{ endif }}
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {{ for i,f,p in choices }}
+                        <tr>
+                            <!-- pie charts for A lotteries -->
+                            {{ if Constants.small_pies == True }}
+                                <td class="pie-chart">
+                                    <div id="pies_a_{{i}}" class="pie-chart"></div>
+                                </td>
+                            {{ endif }}
+
+                            <!-- A lotteries -->
+                            <td class="lottery-a">
+                                {{ lottery_a_hi }} {{ trans "with a probability of " }}<br/><b>{{ p }}</b>,
+                                {{ lottery_a_lo }} {{ trans "otherwise" }}
+                            </td>
+
+                            <!-- radio select form fields -->
+                            <td class="formfield">
+                                <input type="radio" name="{{ f }}" value="A" required>
+                                <input type="radio" name="{{ f }}" value="B" required>
+                            </td>
+
+                            <!-- B lotteries -->
+                            <td class="lottery-b">
+                                {{ lottery_b_hi }} {{ trans "with a probability of " }}<b>{{ p }}</b>,
+                                {{ lottery_b_lo }} {{ trans "otherwise" }}
+                            </td>
+
+                            <!-- pie charts for B lotteries -->
+                            {{ if Constants.small_pies == True }}
+                                <td class="pie-chart">
+                                        <div id="pies_b_{{i}}" class="pie-chart"></div>
+                                </td>
+                            {{ endif }}
+                        </tr>
+                    {{ endfor }}
+                </tbody>
+            </table>
+        </div>
+
+        {{ next_button }}
+
+</div>
+
+{{ endblock }}
