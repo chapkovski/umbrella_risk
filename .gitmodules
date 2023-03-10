@@ -1,0 +1,3 @@
+[submodule "fortune-wheel"]
+	path = fortune-wheel
+	url = https://github.com/chapkovski/fortune-wheel.git

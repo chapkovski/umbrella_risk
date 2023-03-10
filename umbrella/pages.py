@@ -4,6 +4,11 @@ from .models import Constants
 from . import gamepages
 
 
+class FirstPage(Page):
+    def is_displayed(self):
+        return self.round_number == 1
+
+
 # print(getattr(gamepages, 'BretPage').template_name)
 class _InnerTask(Page):
     num_task = None
@@ -11,7 +16,8 @@ class _InnerTask(Page):
 
     def get_app(self):
         apps = self.participant.vars['appseq']
-        return  apps[self.num_task - 1]
+        return apps[self.num_task - 1]
+
     def get_template_names(self):
         app = self.get_app()
         if self.type == 'task':
@@ -28,17 +34,22 @@ class GeneralInstructions(_InnerTask):
 class GeneralTask(_InnerTask):
     type = 'task'
     form_model = 'player'
+
     def _method_substitute(self, method):
         apps = self.participant.vars['appseq']
         app = apps[self.num_task - 1].lower()
         module = getattr(gamepages, app)
         return getattr(module, method)(self.player)
+
     def vars_for_template(self):
         return self._method_substitute('vars_for_template')
+
     def before_next_page(self):
         self._method_substitute('before_next_page')
+
     def get_form_fields(self):
         return self._method_substitute('get_form_fields')
+
 
 class InstructionsP1(GeneralInstructions):
     num_task = 1
@@ -46,7 +57,6 @@ class InstructionsP1(GeneralInstructions):
 
 class P1(GeneralTask):
     num_task = 1
-
 
 
 class InstructionsP2(GeneralInstructions):
@@ -74,6 +84,7 @@ class P4(GeneralTask):
 
 
 page_sequence = [
+    FirstPage,
     # InstructionsP1,
     P1,
     # InstructionsP2,
