@@ -9,6 +9,11 @@ class FirstPage(Page):
         return self.round_number == 1
 
 
+class SecondPage(Page):
+    def is_displayed(self):
+        return self.round_number == 1
+
+
 # print(getattr(gamepages, 'BretPage').template_name)
 class _InnerTask(Page):
     num_task = None
@@ -85,6 +90,7 @@ class P4(GeneralTask):
 
 page_sequence = [
     FirstPage,
+    SecondPage,
     # InstructionsP1,
     P1,
     # InstructionsP2,
