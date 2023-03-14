@@ -42,4 +42,4 @@ DEMO_PAGE_INTRO_HTML = """ """
 SECRET_KEY = 'y0wk^6j@f=kavhihmw9s@7o#j)69(_rid=83ghba8j4o(i$wel'
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
-INSTALLED_APPS = ['otree']
+INSTALLED_APPS = ['otree', 'cem', 'mpl','scl','bret']
