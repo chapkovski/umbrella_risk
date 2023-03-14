@@ -84,8 +84,7 @@ class P4(GeneralTask):
     num_task = 4
 
 class FirstPage(Page):
-    def is_displayed(self):
-        return self.round_number == 1
+    pass
 
 page_sequence = [
     FirstPage,

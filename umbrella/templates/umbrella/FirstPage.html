@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-Part {{view.round_number}} - introduction
+Part {{view.round_number}} - introduction - {{player.treatment}}
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,7 @@ Part {{view.round_number}} - introduction
         <div>If the arrow above the circle points to green, you win the lottery.</div>
         <div>If the arrow above the circle points to red, you lose the lottery.</div>
         <div>You can see below some possible variations of the wheels that can define your lottery outcome.</div>
-        <div>Click on all the wheels before proceeding.</div>
+        <div>You have to click on all the wheels before proceeding.</div>
 
 
     </div>
@@ -31,7 +31,7 @@ Part {{view.round_number}} - introduction
     window.selectedRisk = {{player.risk|json}};
 </script>
 <div id="app"></div>
-{% next_button %}
+<div class="d-none" id="next">{% next_button %}</div>
 
 {% endblock %}
 {% block styles %}
