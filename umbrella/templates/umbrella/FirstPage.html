@@ -2,12 +2,36 @@
 {% load otree static %}
 
 {% block title %}
-    First page
+Part {{view.round_number}} - introduction
 {% endblock %}
 
 {% block content %}
- <div id="app"></div>
-    {% next_button %}
+<div class="card">
+    <div class="card-body">
+        One of the wheels below will be used to generate the outcome
+        of the lottery that will partly define your payoff.
+
+        {% if player.treatment != 'ambiguity' %}
+        <div>
+            Specifically he wheel that is chosen
+            to define the lottery outcome is highlighted in <span class="  bg-warning">yellow</span>.
+        </div>
+
+        {% endif %}
+        <div>If the arrow above the circle points to green, you win the lottery.</div>
+        <div>If the arrow above the circle points to red, you lose the lottery.</div>
+        <div>You can see below some possible variations of the wheels that can define your lottery outcome.</div>
+        <div>Click on all the wheels before proceeding.</div>
+
+
+    </div>
+</div>
+<script>
+    window.showColor = !({{ player.cover|json}});
+    window.selectedRisk = {{player.risk|json}};
+</script>
+<div id="app"></div>
+{% next_button %}
 
 {% endblock %}
 {% block styles %}
@@ -16,8 +40,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 
-{% endblock  %}
+{% endblock %}
 {% block scripts %}
-    <script type="text/javascript" src="{% static 'front/js/chunk-vendors.js' %}"></script>
-    <script type="text/javascript" src="{% static 'front/js/main.js' %}"></script>
-{% endblock  %}
+<script type="text/javascript" src="{% static 'front/js/chunk-common.js' %}"></script>
+
+
+<script type="text/javascript" src="{% static 'front/js/main.js' %}"></script>
+{% endblock %}

@@ -36,33 +36,44 @@ class Constants(BaseConstants):
         'MPL',
         'SCL'
     ]
-
+    treatment_correspodence = dict(
+        control=dict(cover=False,
+                     risk=lambda x: 100),
+        risk=dict(cover=False,
+                  risk=lambda x: 60),
+        ambiguity = dict(cover=True,
+                         risk=lambda x: random.choice(range(0, 101, 10)))
+    )
 
 
 class Subsession(BaseSubsession):
+
     def bret_creating_session(self):
         pass
 
     def creating_session(self):
+
         session_creator.bret.creating_session(self)
         session_creator.cem.creating_session(self)
         session_creator.mpl.creating_session(self)
         session_creator.scl.creating_session(self)
 
-
-        if self.round_number==1:
+        if self.round_number == 1:
             for p in self.session.get_participants():
                 treatments = Constants.TREATMENTS.copy()
                 random.shuffle(treatments)
                 p.vars['treatments'] = treatments
                 apps = Constants.APPS.copy()
                 random.shuffle(apps)
-                p.vars['appseq']  = apps
+                p.vars['appseq'] = apps
 
         for p in self.get_players():
             p.treatment = p.participant.vars['treatments'][self.round_number-1]
             p.appseq = json.dumps(p.participant.vars['appseq'])
-
+            treatment_params = Constants.treatment_correspodence[p.treatment]
+            p.risk = treatment_params.get('risk')(None)
+            p.cover = treatment_params.get('cover') 
+            
 
 
 class Group(BaseGroup):
@@ -72,6 +83,9 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     treatment = models.StringField()
     appseq = models.StringField()
+    cover = models.BooleanField()
+    risk = models.IntegerField()
+
     def get_apps(self):
         return self.participant.vars['appseq']
 
@@ -96,7 +110,6 @@ class Player(BasePlayer):
     cem_inconsistent = models.IntegerField()
     cem_switching_row = models.IntegerField()
 
-
     ##############################END OF CEM###############################
 
     ##############################SCL###############################
@@ -112,12 +125,10 @@ class Player(BasePlayer):
         locals()['mpl_choice_' + str(j)] = models.StringField()
     del j
 
-
     mpl_random_draw = models.IntegerField()
     mpl_choice_to_pay = models.StringField()
     mpl_option_to_pay = models.StringField()
     mpl_inconsistent = models.IntegerField()
     mpl_switching_row = models.IntegerField()
-
 
     ##############################END OF MPL###############################

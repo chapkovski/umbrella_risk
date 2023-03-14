@@ -4,14 +4,10 @@ from .models import Constants
 from . import gamepages
 
 
-class FirstPage(Page):
-    def is_displayed(self):
-        return self.round_number == 1
 
 
 class SecondPage(Page):
-    def is_displayed(self):
-        return self.round_number == 1
+   pass
 
 
 # print(getattr(gamepages, 'BretPage').template_name)
@@ -87,6 +83,9 @@ class InstructionsP4(GeneralInstructions):
 class P4(GeneralTask):
     num_task = 4
 
+class FirstPage(Page):
+    def is_displayed(self):
+        return self.round_number == 1
 
 page_sequence = [
     FirstPage,
