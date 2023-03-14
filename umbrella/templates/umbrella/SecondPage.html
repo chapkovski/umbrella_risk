@@ -2,11 +2,12 @@
 {% load otree static %}
 
 {% block title %}
-    Demo page
+    Example of the lottery wheel - {{player.treatment}}.
 {% endblock %}
 
 {% block content %}
-hellow
+On each of the 4 following pages you will see the spinning wheel on left bottom corner. When it stops spinning
+the outcome will define the result of the lottery.
  
     {% next_button %}
 {% include 'umbrella/includes/singlecircle.html'%}

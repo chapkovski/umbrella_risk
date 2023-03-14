@@ -17,6 +17,10 @@ Part {{view.round_number}} - introduction - {{player.treatment}}
             to define the lottery outcome is highlighted in <span class="  bg-warning">yellow</span>.
         </div>
 
+        {% else %}
+        <div>
+        <b>Till the end of this part you will not be able to know which wheel will be chosen to define your outcome. So it will spin covered by the gray cover so its type is not revealed to you. </b>
+        </div>
         {% endif %}
         <div>If the arrow above the circle points to green, you win the lottery.</div>
         <div>If the arrow above the circle points to red, you lose the lottery.</div>
