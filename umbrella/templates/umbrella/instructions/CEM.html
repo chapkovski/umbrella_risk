@@ -1,12 +1,70 @@
 {% extends "global/Page.html" %}
-{% load otree static %}
+{% load staticfiles otree %}
+{% load i18n %}
 
-{% block title %}
-    CEM instr
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'cem/css/custom.css' %}" rel="stylesheet"/>
 {% endblock %}
 
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+
+{% block title %}
+    
+    Instructions 
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
 {% block content %}
 
-    {% next_button %}
+    <div class="wrapper instructions">
+        <p>
+            {% blocktrans trimmed with n=Constants.num_choices hi=lottery_hi lo=lottery_lo p=probability %}
+                In this task you face nine rows representing nine decisions
+                you have to make. Each row is a paired choice between Option A and Option B. Option A is a
+                lottery paying {{ hi }} in {{ p }} of the cases and {{ lo }} otherwise. The lottery is the
+                same in each of the nine rows. Option B is a sure payoff, varying in each of the nine rows.
+                You have to make nine choices, one for each row, between Option A and Option B. However,
+                only one of them determines your earnings at the end of the experiment.
+                {% endblocktrans %}
+        <p> 
+           <strong>Important:</strong> If you pick B, all decisions lower in the table will also be B.
+        </p>
+             
+        </p>
+         <p>
+            
+                After you have made all of your choices, up to two random draws determine your payoff:
+           
+            <ul>
+                <li>
+                    
+                        The first draws one of the nine rows with equal probability.
+                    
+                </li>
+                <li>
+                    {% blocktrans trimmed with hi=lottery_hi lo=lottery_lo %}
+                        If you have chosen Option A for this randomly drawn row, a second random drawn determines
+                        your payment which is either {{ hi }} or {{ lo }} with equal probabilities.
+                    {% endblocktrans %}
+                </li>
+                <li>
+                     {% blocktrans trimmed %}
+                        If you have chosen Option B for this randomly drawn row, you earn the respective sure payoff.
+                    {% endblocktrans %}
+                </li>
+            </ul>
+        </p>
+    </div>
 
+    {% next_button %}
 {% endblock %}

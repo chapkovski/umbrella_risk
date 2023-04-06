@@ -26,16 +26,6 @@ class _InnerTask(Page):
         if self.type == 'instructions':
             return [f'umbrella/instructions/{app}.html']
         return super().get_template_names()
-
-
-class GeneralInstructions(_InnerTask):
-    type = 'instructions'
-
-
-class GeneralTask(_InnerTask):
-    type = 'task'
-    form_model = 'player'
-
     def _method_substitute(self, method):
         apps = self.participant.vars['appseq']
         app = apps[self.num_task - 1].lower()
@@ -47,6 +37,16 @@ class GeneralTask(_InnerTask):
 
     def before_next_page(self):
         self._method_substitute('before_next_page')
+
+
+class GeneralInstructions(_InnerTask):
+    type = 'instructions'
+
+
+class GeneralTask(_InnerTask):
+    type = 'task'
+    form_model = 'player'
+
 
     def get_form_fields(self):
         return self._method_substitute('get_form_fields')
@@ -87,9 +87,9 @@ class FirstPage(Page):
     pass
 
 page_sequence = [
-    FirstPage,
-    SecondPage,
-    # InstructionsP1,
+    # FirstPage,
+    # SecondPage,
+    InstructionsP1,
     P1,
     # InstructionsP2,
     P2,

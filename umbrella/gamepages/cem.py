@@ -14,10 +14,14 @@ def vars_for_template(player):
     total = Constants.num_choices
     page = player.subsession.round_number
     progress = page / total * 100
-
+    
     return {
         'enforce_consistency':Constants.enforce_consistency,
         'choices': player.participant.vars['cem_choices'],
+        'Constants':Constants,
+        'lottery_lo':  cu(Constants.lottery_lo),
+        'lottery_hi':  cu(Constants.lottery_hi),
+        'probability': "{0:.1f}".format(Constants.probability) + "%"
 
     }
 
