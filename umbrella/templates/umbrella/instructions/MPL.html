@@ -1,11 +1,64 @@
 {% extends "global/Page.html" %}
-{% load otree static %}
+{% load staticfiles otree %}
+{% load i18n %}
 
-{% block title %}
-    MPL instr
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'mpl/css/custom.css' %}" rel="stylesheet"/>
 {% endblock %}
 
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    
+    Instructions
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
 {% block content %}
+
+    <div class="wrapper instructions">
+        <p>
+            
+                In this task you face ten rows representing ten decisions you have to
+                make. Each row is a paired choice between Option A and Option B. You have to make ten choices,
+                one for each row, between Option A and Option B. The possible payoffs of Option A and Option B are
+                the same for all ten rows. Only the corresponding probabilities to earn the high and low payoff,
+                respectively, differ in for each decision. However, only one of them determines your earnings
+                at the end of experiment.
+           
+        </p>
+            <p> 
+                <strong>Important:</strong> If you pick B, all decisions lower in the table will also be B.
+             </p>
+
+        <p>
+          
+                After you have made all of your choices, two random draws determine your payoff:
+            
+            <ul>
+                <li>
+ 
+                        The first draws one of the ten rows with equal probability.
+                    
+                </li>
+                <li>
+                    
+                        For this randomly drawn row, the second random draw determines whether the high or low
+                        lottery outcome is paid, depending on the respective probabilities for the lotteries in
+                        Option A and Option B.
+                    
+                </li>
+            </ul>
+        </p>
+    </div>
 
     {% next_button %}
 

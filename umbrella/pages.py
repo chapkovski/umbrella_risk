@@ -91,10 +91,10 @@ page_sequence = [
     # SecondPage,
     InstructionsP1,
     P1,
-    # InstructionsP2,
+    InstructionsP2,
     P2,
-    # InstructionsP3,
+    InstructionsP3,
     P3,
-    # InstructionsP4,
+    InstructionsP4,
     P4
 ]
