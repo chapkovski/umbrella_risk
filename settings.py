@@ -1,19 +1,19 @@
 from os import environ
 
-app_seq= [
-    
+app_seq = [
+
     'umbrella',
-   
-    ]
+
+]
 SESSION_CONFIGS = [
     dict(
-       name='umbrella',
-    #    display_name="Control",
-       num_demo_participants=3,
-       app_sequence=app_seq,
-   
+        name='umbrella',
+        #    display_name="Control",
+        num_demo_participants=3,
+        app_sequence=app_seq,
+
     ),
-   
+
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
@@ -43,4 +43,5 @@ DEMO_PAGE_INTRO_HTML = """ """
 SECRET_KEY = 'y0wk^6j@f=kavhihmw9s@7o#j)69(_rid=83ghba8j4o(i$wel'
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
-INSTALLED_APPS = ['otree' ]
+INSTALLED_APPS = ['otree']
+POINTS_DECIMAL_PLACES = 2

@@ -1,0 +1,20 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Lottery Results are shown here
+{% endblock %}
+
+{% block content %}
+<b>What we need to show here?</b>
+<ul>
+<li>which block (treatment, control, ambiguity) was chosen</li>
+<li>what game within a block was chosen (MPL, SCL, CEM, BRET)</li>
+<li>User decision in this block</li>
+<li>The output of the lottery (if the user has not chosen a secure option)</li>
+<li>If <b>ambiguity</b> block was chosen: The background lottery risk level  </li>
+<li>If <b>not control </b> block was chosen: the output of the background lottery </li>
+</ul>
+    {% next_button %}
+
+{% endblock %}

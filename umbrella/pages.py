@@ -36,7 +36,8 @@ class _InnerTask(Page):
         return self._method_substitute('vars_for_template')
 
     def before_next_page(self):
-        self._method_substitute('before_next_page')
+        if self.type=='task':
+            self._method_substitute('before_next_page')
 
 
 class GeneralInstructions(_InnerTask):
@@ -85,10 +86,17 @@ class P4(GeneralTask):
 
 class FirstPage(Page):
     pass
+class QuizForTreatment(Page):
+    pass
+
+class LotteryResults(Page):
+    def is_displayed(self):
+        return self.round_number==Constants.num_rounds
 
 page_sequence = [
-    # FirstPage,
-    # SecondPage,
+    FirstPage,
+    SecondPage,
+    QuizForTreatment,
     InstructionsP1,
     P1,
     InstructionsP2,
@@ -96,5 +104,6 @@ page_sequence = [
     InstructionsP3,
     P3,
     InstructionsP4,
-    P4
+    P4,
+    LotteryResults
 ]

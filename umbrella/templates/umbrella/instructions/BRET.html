@@ -1,11 +1,55 @@
 {% extends "global/Page.html" %}
-{% load otree static %}
+{% load staticfiles otree %}
+{% load i18n %}
 
-{% block title %}
-    BRET INS
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'bret/css/custom.css' %}" rel="stylesheet"/>
 {% endblock %}
 
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    
+     Instructions 
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
 {% block content %}
+
+    <div class="instructions wrapper">
+        <p>
+             
+                In this task you face a square composed of 100 boxes.
+                You can earn {{ box_value }} for each box that you collect.
+                However, a bomb is hidden in one of the boxes, but you do not know in which one.
+                You only know that the bomb can be located in any box with equal probability.
+             
+        </p>
+        <p>
+           
+                As soon as you start the task by clicking on the "Start" button, one of the boxes is collected
+                every second. Collected boxes are marked by a tick symbol. Your task is to choose when to stop
+                the collection process by hitting the "Stop" button. Once you have clicked on the "Stop" button
+                you cannot continue collecting boxes.
+          
+        </p>
+        <p>
+            
+                If the bomb is among the collected boxes, it destroys everything and your payoff is zero.
+                If the bomb in not among the boxes that you have collected, your payoff is {{ box_value }}
+                for each box collected.
+           
+        </p>
+    </div>
 
     {% next_button %}
 

@@ -1,12 +1,46 @@
 {% extends "global/Page.html" %}
-{% load otree static %}
+{% load staticfiles otree %}
+{% load i18n %}
 
-{% block title %}
-    SCL instr
+
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+{% block styles %}
+    <link href="{% static 'scl/css/custom.css' %}" rel="stylesheet"/>
 {% endblock %}
 
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+     
+   Instructions
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
 {% block content %}
 
-    {% next_button %}
+    <div class="wrapper instructions">
+        <p>
+            
+                In  this task you face six different lotteries. Each lottery has
+                two possible outcomes (Event A or Event B). Either of the two events occurs with a 50% probability.
+            
+        </p>
+        <p>
+             
+                Your task is to indicate which of the six lotteries you would like to play. For the lottery that
+                you choose, a random draw at the end of the experiment determines which event, Event A or Event
+                B, occurs. This randomly drawn event determines your payment at the end of the experiment.
+             
+        </p>
+    </div>
 
+ {% next_button %}
 {% endblock %}

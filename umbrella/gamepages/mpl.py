@@ -17,6 +17,7 @@ def vars_for_template(player):
     progress = page / total * 100
 
     return {
+
         'small_pies':Constants.small_pies,
         'large_pies':Constants.large_pies,
         'one_choice_per_page':Constants.one_choice_per_page,
