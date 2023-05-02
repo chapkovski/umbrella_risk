@@ -1,13 +1,23 @@
 from otree.api import Currency as c, currency_range
-from ._builtin import Page, WaitPage
+from ._builtin import Page as oTreePage, WaitPage
 from .models import Constants
 from . import gamepages
 
 
+class Page(oTreePage):
+    instructions = True
+
+    def get_context_data(self, **context):
+        r = super().get_context_data(**context)
+        r['maxpages'] = self.participant._max_page_index
+        r['page_index'] = self._index_in_pages
+        r['progress'] = f'{int(self._index_in_pages / self.participant._max_page_index * 100):d}'
+        r['instructions'] = self.instructions
+        return r
 
 
 class SecondPage(Page):
-   pass
+    pass
 
 
 # print(getattr(gamepages, 'BretPage').template_name)
@@ -26,6 +36,7 @@ class _InnerTask(Page):
         if self.type == 'instructions':
             return [f'umbrella/instructions/{app}.html']
         return super().get_template_names()
+
     def _method_substitute(self, method):
         apps = self.participant.vars['appseq']
         app = apps[self.num_task - 1].lower()
@@ -36,7 +47,7 @@ class _InnerTask(Page):
         return self._method_substitute('vars_for_template')
 
     def before_next_page(self):
-        if self.type=='task':
+        if self.type == 'task':
             self._method_substitute('before_next_page')
 
 
@@ -47,7 +58,6 @@ class GeneralInstructions(_InnerTask):
 class GeneralTask(_InnerTask):
     type = 'task'
     form_model = 'player'
-
 
     def get_form_fields(self):
         return self._method_substitute('get_form_fields')
@@ -84,18 +94,56 @@ class InstructionsP4(GeneralInstructions):
 class P4(GeneralTask):
     num_task = 4
 
+
+class ConsentPage(Page):
+    form_fields = ['consent']
+    form_model = 'player'
+
+    def is_displayed(self):
+        return self.round_number == 1
+
+
+class OverallInstructions(Page):
+    form_fields = ['consent']
+    form_model = 'player'
+
+    def is_displayed(self):
+        return self.round_number == 1
+
+
 class FirstPage(Page):
-    pass
+    def vars_for_template(self):
+        return dict(no_risk_perc=100-self.player.risk)
+
+
+class OverallQuiz(Page):
+    form_model = 'player'
+    form_fields = ['cq_1', 'cq_2']
+
+    def is_displayed(self):
+        return self.round_number == 1
+
+
 class QuizForTreatment(Page):
-    pass
+    form_model = 'player'
+
+    def get_form_fields(self):
+        return [f'cq_{self.player.treatment}']
+
 
 class LotteryResults(Page):
     def is_displayed(self):
-        return self.round_number==Constants.num_rounds
+        return self.round_number == Constants.num_rounds
+
 
 page_sequence = [
+    ConsentPage,
+
+    OverallInstructions,
+    OverallQuiz,
     FirstPage,
     SecondPage,
+
     QuizForTreatment,
     InstructionsP1,
     P1,

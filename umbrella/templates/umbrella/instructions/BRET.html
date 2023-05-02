@@ -25,31 +25,45 @@
 {# ****************************************************************************************************************** #}
 {% block content %}
 
-    <div class="instructions wrapper">
+     <div class="instructions">
         <p>
-             
-                In this task you face a square composed of 100 boxes.
-                You can earn {{ box_value }} for each box that you collect.
-                However, a bomb is hidden in one of the boxes, but you do not know in which one.
-                You only know that the bomb can be located in any box with equal probability.
-             
+            {% blocktrans trimmed %}
+                In the following, you will see a {{ num_rows }}x{{ num_cols }}-matrix containing
+                {{ num_boxes }} boxes on your screen.
+            {% endblocktrans %}
         </p>
         <p>
-           
-                As soon as you start the task by clicking on the "Start" button, one of the boxes is collected
-                every second. Collected boxes are marked by a tick symbol. Your task is to choose when to stop
-                the collection process by hitting the "Stop" button. Once you have clicked on the "Stop" button
-                you cannot continue collecting boxes.
-          
+            {% blocktrans trimmed %}
+                As soon as you start the task by hitting the 'Start' button,
+                one of the boxes is collected per second, starting from the top-left corner.
+                Once collected, the box marked by a tick symbol.
+                For each box collected you earn {{ box_value }}.
+            {% endblocktrans %}
         </p>
         <p>
-            
-                If the bomb is among the collected boxes, it destroys everything and your payoff is zero.
-                If the bomb in not among the boxes that you have collected, your payoff is {{ box_value }}
-                for each box collected.
-           
+            {% blocktrans trimmed %}
+                Behind one of the boxes hides a bomb that destroys everything that has been collected.
+                The remaining {{ num_nobomb }} boxes are worth {{ box_value }} each.
+                You do not know where the bomb is located.
+                You only know that the bomb can be in any place with equal probability.
+            {% endblocktrans %}
         </p>
+        <p>
+            {% blocktrans trimmed %}
+                Your task is to choose when to stop the collecting process. You do so by hitting 'Stop' at any time.
+                If you collect the box where the bomb is located, the bomb will explode and you will earn zero.
+                If you stop before collecting the bomb, you gain the amount accumulated that far.
+            {% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans trimmed %}
+                At the end of the task boxes are toggled by hitting the 'Solve' button.
+                A dollar sign or a fire symbol (for the bomb) will be shown on each of your collected boxes.
+            {% endblocktrans %}
+        </p>
+
     </div>
+
 
     {% next_button %}
 

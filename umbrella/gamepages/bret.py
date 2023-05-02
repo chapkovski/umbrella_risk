@@ -14,13 +14,13 @@ def get_form_fields(player):
 
 
 def vars_for_template(player):
-    
+
     reset = player.participant.vars.get('reset', False)
     if reset:
         del player.participant.vars['reset']
     input = not Constants.devils_game if not Constants.dynamic else False
     otree_vars = {
-        
+
         'reset': reset,
         'input': input,
         'random': Constants.random,
@@ -35,7 +35,11 @@ def vars_for_template(player):
     }
     return {
         'otree_vars': otree_vars,
-    'box_value': Constants.box_value,
+        'num_rows': Constants.num_rows,
+        'num_cols': Constants.num_cols,
+        'num_boxes':            Constants.num_rows * Constants.num_cols,
+          'num_nobomb':           Constants.num_rows * Constants.num_cols - 1,
+        'box_value': Constants.box_value,
     }
 
 

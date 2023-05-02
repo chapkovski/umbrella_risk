@@ -24,41 +24,33 @@
 {# ****************************************************************************************************************** #}
 {% block content %}
 
-    <div class="wrapper instructions">
+     <div class="wrapper instructions">
         <p>
-            
-                In this task you face ten rows representing ten decisions you have to
-                make. Each row is a paired choice between Option A and Option B. You have to make ten choices,
-                one for each row, between Option A and Option B. The possible payoffs of Option A and Option B are
-                the same for all ten rows. Only the corresponding probabilities to earn the high and low payoff,
-                respectively, differ in for each decision. However, only one of them determines your earnings
-                at the end of experiment.
-           
+            {% blocktrans trimmed with n=num_choices %}
+                In the following, you'll face {{ n }} decisions listed on your screen. Each decision is a paired
+                choice between "Option A" and "Option B". While the payoffs of the two options are fixed for all
+                decisions, the chances of the high payoff for each option will vary.
+            {% endblocktrans %}
         </p>
-            <p> 
-                <strong>Important:</strong> If you pick B, all decisions lower in the table will also be B.
-             </p>
+        <p>
+            {% blocktrans trimmed with n=num_choices %}
+                After you have made all of your choices, one of the {{ n }} decisions will be randomly chosen for
+                your payment. For the option you chose, A or B, in this decision, it will be randomly determined
+                (according to the corresponding probabilities) whether the low or high outcome will constitute your
+                payoff.
+            {% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans trimmed with n=num_choices %}
+                To summarize: You will make {{ n }} choices; for each decision you will have to choose between
+                "Option A" and "Option B". You may choose A for some decision rows and B for other rows. When
+                you are finished, one of the {{ n }} decisions will be randomly picked for your payoff. Then a
+                random number will be drawn to determine your earnings for the option you chose in that decision.
+            {% endblocktrans %}
+        </p>
 
-        <p>
-          
-                After you have made all of your choices, two random draws determine your payoff:
-            
-            <ul>
-                <li>
- 
-                        The first draws one of the ten rows with equal probability.
-                    
-                </li>
-                <li>
-                    
-                        For this randomly drawn row, the second random draw determines whether the high or low
-                        lottery outcome is paid, depending on the respective probabilities for the lotteries in
-                        Option A and Option B.
-                    
-                </li>
-            </ul>
-        </p>
     </div>
+
 
     {% next_button %}
 

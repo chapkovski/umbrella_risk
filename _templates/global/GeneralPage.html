@@ -1,4 +1,4 @@
-{% extends "global/GeneralPage.html" %}
+{% extends "otree/Page.html" %}
 {% load i18n %}
 {% load otree static %}
 
@@ -10,12 +10,27 @@
 
 {% block body_main %}
 {% block progress %}
-{{block.super}}
-{% endblock progress %}
-{% include 'umbrella/includes/singlecircle.html'%}
 
-<div class="otree-body container "  >
-    <h2 class="otree-title page-header mt-5">{% block title %}{% endblock %}</h2>
+<nav class="navbar navbar-light bg-light  d-flex fixed-top ">
+
+
+
+
+    <div class="progress" style="height:30px;width:100%;margin-top:0px">
+        <div class="progress-bar" role="progressbar" style="width: {{ progress }}%" aria-valuenow="{{ progress }}"
+            aria-valuemin="0" aria-valuemax="100">
+            <b> {{ progress }}%</b>
+        </div>
+    </div>
+
+
+
+</nav>
+{% endblock %}
+
+
+<div class="otree-body container mt-3"  >
+    <h2 class="otree-title page-header">{% block title %}{% endblock %}</h2>
     {% if view.remaining_timeout_seconds != None %}
     {% include 'otree/includes/TimeLimit.html' with form_element_id="form" %}
     {% endif %}

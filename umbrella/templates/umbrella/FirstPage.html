@@ -1,41 +1,69 @@
-{% extends "otree/Page.html" %}
+{% extends "global/GeneralPage.html" %}
 {% load otree static %}
 
 {% block title %}
-Part {{view.round_number}} - introduction - {{player.treatment}}
+Part {{view.round_number}} - introduction
 {% endblock %}
 
 {% block content %}
 <div class="card">
     <div class="card-body">
-        One of the wheels below will be used to generate the outcome
-        of the lottery that will partly define your payoff.
 
-        {% if player.treatment != 'ambiguity' %}
-        <div>
-            Specifically he wheel that is chosen
-            to define the lottery outcome is highlighted in <span class="  bg-warning">yellow</span>.
-        </div>
 
-        {% else %}
-        <div>
-        <b>Till the end of this part you will not be able to know which wheel will be chosen to define your outcome. So it will spin covered by the gray cover so its type is not revealed to you. </b>
-        </div>
+        {% if player.treatment == 'risk' %}
+        In this round you have the opportunity to receive an additional 10€. Whether you receive these
+        In this round you will receive 10€ depending on the outcome of a wheel of fortune, regardless of what else
+        happens during this study. Please familiarize yourself with the possible outcomes for all the wheels relevant in
+        this round.
+
         {% endif %}
-        <div>If the arrow above the circle points to green, you win the lottery.</div>
-        <div>If the arrow above the circle points to red, you lose the lottery.</div>
-        <div>You can see below some possible variations of the wheels that can define your lottery outcome.</div>
-        <div>You have to click on all the wheels before proceeding.</div>
+        {% if player.treatment == 'control' %}
+        In this round you will receive 5€ depending on the outcome of a wheel of fortune, regardless of what else
+        happens during this study. Please familiarize yourself with the possible outcomes for all the wheels relevant in
+        this round.
+        {% endif %}
+        {% if player.treatment == 'ambiguity' %}
+        In this round you will receive 10€ depending on the outcome of a wheel of fortune, regardless of what else
+        happens during this study. Please familiarize yourself with the possible outcomes for all the wheels relevant in
+        this round.
+        {% endif %}
+
+
 
 
     </div>
 </div>
 <script>
-    window.showColor = !({{ player.cover|json}});
-    window.selectedRisk = {{player.risk|json}};
+    window.showColor = !({{ player.cover | json }});
+    window.selectedRisk = {{ player.risk | json }};
 </script>
 <div id="app"></div>
-<div class="d-none" id="next">{% next_button %}</div>
+<div class="d-none" id="next">
+    <div class="card my-3">
+        <div class="card-body">
+
+            {% if player.treatment == 'risk' %}
+            As you can see the wheel of fortune relevant for this round {{player.risk}}% green and {{no_risk_perc}}% red. 
+            This means, you can have
+            a {{player.risk}}% chance to win 10€ if this round is chosen at the end of the experiment as payoff relevant.
+            {% endif %}
+            {% if player.treatment == 'control' %}
+            As you can see the wheel of fortune relevant for this round is only green. This means, you will receive {{
+            session.config.participation_fee }} for sure, if this round is chosen at the end of the experiment as payoff
+            relevant.
+
+
+            {% endif %}
+            {% if player.treatment == 'ambiguity' %}
+            In this round we will not tell you which of the wheels will be relevant. For this reason, the probabilities
+            for winning and losing are unknown. They are somewhere between 1% and 99%. This means, we the chance to win
+            10€ is between 1%-99% if this round is chosen at the end of the experiment as payoff relevant.
+            {% endif %}
+
+        </div>
+    </div>
+    {% next_button %}
+</div>
 
 {% endblock %}
 {% block styles %}

@@ -1,0 +1,44 @@
+{% extends "global/GeneralPage.html" %}
+{% load otree static %}
+
+{% block title %}
+Thank you for choosing to take this task.
+{% endblock %}
+
+{% block content %}
+
+<ul class="list-group list-group-flush my-3">
+    <li class="list-group-item">
+        This is an academic study of the University of Erfurt, University of Bamberg and University of Bonn,
+        in which we examine how people make decisions. There are no known risks or benefits from participating in this
+        study. It will take about 15 minutes to complete the task.
+    </li>
+    <li class="list-group-item">
+        There are no risks involved with participation in this study. The data collected will be used for research
+        purposes only. Your participation is completely voluntary, and you are free to withdraw at any time. However, if
+        you decide to terminate your participation before the end of the study, you will not be compensated. We will not
+        analyze any information that can identify you personally, and any information you provide will remain anonymous
+        and will be reported only on the aggregate level.
+    </li>
+    <li class="list-group-item">The instructions for the task, and the rules for the bonus payment will appear on the
+        next screen. Read them carefully and make sure you understand the "rules of the game." Among other things, your
+        bonus payment will depend on your understanding of these instructions. A failure to read the instructions may
+        result in you not being able to complete the task.
+    </li>
+    <li class="list-group-item">Important! To get the Prolific completion code, as well as your base payment and bonus,
+        you will have to complete the task without breaks. In case of lengthy idle time, the task will automatically
+        stop, and you will not be able to take it again. This task cannot be taken from a mobile device.
+    </li>
+    <li class="list-group-item">If you have any questions concerning this task, please email to <a href="mailto:johannes.leder@uni-bamberg.de">johannes.leder@uni-bamberg.de</a>.</li>
+    <li class="list-group-item">If you agree to these terms, check the checkbox below otherwise you cannot start the
+        task. If you want to exit, just close the browser or tab.
+        <span class="text-danger fst-italic font-italic">
+            {%formfields%}
+        </span>
+    </li>
+
+</ul>
+
+
+<button class="btn btn-lg btn-primary">Start task</button>
+{% endblock %}
