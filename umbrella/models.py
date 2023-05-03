@@ -40,7 +40,7 @@ class Constants(BaseConstants):
         control=dict(cover=False,
                      risk=lambda x: 100),
         risk=dict(cover=False,
-                  risk=lambda x: x.session.config.get('risk',50)),
+                  risk=lambda x: x.session.config.get('risk', 50)),
         ambiguity=dict(cover=True,
                        risk=lambda x: random.choice(range(0, 101, 10)))
     )
@@ -80,11 +80,19 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    consent = models.BooleanField(widget=widgets.CheckboxInput, label='I have read this consent form and I agree')
+    bret_payoff = models.CurrencyField()
+    cem_payoff = models.CurrencyField()
+    mpl_payoff = models.CurrencyField()
+    scl_payoff = models.CurrencyField()
+    consent = models.BooleanField(
+        widget=widgets.CheckboxInput, label='I have read this consent form and I agree')
     treatment = models.StringField()
     appseq = models.StringField()
     cover = models.BooleanField()
     risk = models.IntegerField()
+    payable_round = models.IntegerField()
+    payable_app = models.StringField()
+    lottery_outcome = models.FloatField()
 
     def get_apps(self):
         return self.participant.vars['appseq']
@@ -135,16 +143,19 @@ class Player(BasePlayer):
 
     ##############################QUIZES###############################
     cq_1 = models.StringField(label='At the end of the study, how many decisions will be paid out?',
-                              choices=[str(i) for i in range(1,13)],widget=widgets.RadioSelect)
-    cq_2= models.StringField(label='Does the decision in one part of the experiment influence the outcome of other parts?',
-                             choices=['Yes','No'],widget=widgets.RadioSelect)
-    cq_control= models.StringField(label=' How likely is it, that you receive an additional 5€?', 
-                                   choices=[f'{i}%' for i in range(0,101, 10)]+['I do not know'],
-                                   widget=widgets.RadioSelect)
-    cq_risk= models.StringField(label='How likely is it, that you receive an additional 10€?',
-                                choices=[f'{i}%' for i in range(0,101, 10)]+['I do not know'],
-                                   widget=widgets.RadioSelect)
-    cq_ambiguity= models.StringField(label='How likely is it, that you receive an additional 10€?',
-                                     choices=[f'{i}%' for i in range(0,101, 10)]+['I do not know'],
-                                   widget=widgets.RadioSelect)
+                              choices=[str(i) for i in range(1, 13)], widget=widgets.RadioSelect)
+    cq_2 = models.StringField(label='Does the decision in one part of the experiment influence the outcome of other parts?',
+                              choices=['Yes', 'No'], widget=widgets.RadioSelect)
+    cq_control = models.StringField(label=' How likely is it, that you receive an additional 5€?',
+                                    choices=[f'{i}%' for i in range(
+                                        0, 101, 10)]+['I do not know'],
+                                    widget=widgets.RadioSelect)
+    cq_risk = models.StringField(label='How likely is it, that you receive an additional 10€?',
+                                 choices=[f'{i}%' for i in range(
+                                     0, 101, 10)]+['I do not know'],
+                                 widget=widgets.RadioSelect)
+    cq_ambiguity = models.StringField(label='How likely is it, that you receive an additional 10€?',
+                                      choices=[f'{i}%' for i in range(
+                                          0, 101, 10)]+['I do not know'],
+                                      widget=widgets.RadioSelect)
     ##############################END OF MPL###############################

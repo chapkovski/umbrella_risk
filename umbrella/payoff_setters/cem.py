@@ -24,11 +24,11 @@ def set_payoffs(self):
 
     if self.cem_option_to_pay == 'A':
         if self.cem_random_draw <= choice_to_pay[2]:
-            self.payoff = Constants.endowment + choice_to_pay[3]
+            self.cem_payoff = Constants.endowment + choice_to_pay[3]
         else:
-            self.payoff = Constants.endowment + choice_to_pay[4]
+            self.cem_payoff = Constants.endowment + choice_to_pay[4]
     else:
-        self.payoff = Constants.endowment + choice_to_pay[5]
+        self.cem_payoff = Constants.endowment + choice_to_pay[5]
 
 
 def set_consistency(self):

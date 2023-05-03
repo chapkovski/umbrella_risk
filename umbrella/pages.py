@@ -5,7 +5,7 @@ from . import gamepages
 
 
 class Page(oTreePage):
-    instructions = True
+    instructions = False
 
     def get_context_data(self, **context):
         r = super().get_context_data(**context)
@@ -58,7 +58,11 @@ class GeneralInstructions(_InnerTask):
 class GeneralTask(_InnerTask):
     type = 'task'
     form_model = 'player'
-
+    instructions = True
+    def instructions_path(self):
+        app = self.get_app()
+        return f'umbrella/instructions/inner_{app}.html'
+    
     def get_form_fields(self):
         return self._method_substitute('get_form_fields')
 
@@ -68,6 +72,7 @@ class InstructionsP1(GeneralInstructions):
 
 
 class P1(GeneralTask):
+
     num_task = 1
 
 
@@ -117,6 +122,8 @@ class FirstPage(Page):
 
 
 class OverallQuiz(Page):
+    instructions=True
+    instructions_path= 'umbrella/instructions/overall.html'
     form_model = 'player'
     form_fields = ['cq_1', 'cq_2']
 
@@ -125,6 +132,10 @@ class OverallQuiz(Page):
 
 
 class QuizForTreatment(Page):
+    instructions=True
+    def instructions_path(self):
+        return f'umbrella/instructions/{self.player.treatment}.html'
+    
     form_model = 'player'
 
     def get_form_fields(self):
@@ -132,8 +143,9 @@ class QuizForTreatment(Page):
 
 
 class LotteryResults(Page):
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+    pass
+    # def is_displayed(self):
+    #     return self.round_number == Constants.num_rounds
 
 
 page_sequence = [

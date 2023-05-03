@@ -20,14 +20,14 @@ def set_payoffs(self):
     # ------------------------------------------------------------------------------------------------------------
     if self.mpl_option_to_pay == 'A':
         if self.mpl_random_draw <= self.participant.vars['mpl_index_to_pay']:
-            self.payoff = Constants.lottery_a_hi
+            self.mpl_payoff = Constants.lottery_a_hi
         else:
-            self.payoff = Constants.lottery_a_lo
+            self.mpl_payoff = Constants.lottery_a_lo
     else:
         if self.mpl_random_draw <= self.participant.vars['mpl_index_to_pay']:
-            self.payoff = Constants.lottery_b_hi
+            self.mpl_payoff = Constants.lottery_b_hi
         else:
-            self.payoff = Constants.lottery_b_lo
+            self.mpl_payoff = Constants.lottery_b_lo
 
 # determine consistency
 # ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

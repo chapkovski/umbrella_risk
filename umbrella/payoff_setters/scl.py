@@ -21,7 +21,7 @@ def set_payoffs(self):
     # set player's payoff
     # ------------------------------------------------------------------------------------------------------------
     if self.scl_outcome_to_pay == "high":
-        self.payoff = lottery_selected[2]
+        self.scl_payoff = lottery_selected[2]
     else:
-        self.payoff = lottery_selected[1]
+        self.scl_payoff = lottery_selected[1]
 

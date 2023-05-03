@@ -6,38 +6,7 @@ Instructions
 {% endblock %}
 
 {% block content %}
-
-<ul class="list-group list-group-flush my-3">
-    <li class="list-group-item">
-        The decisions in this experiment are not hypothetical. Your chooses determine how much money you will get at the
-        end!
-    </li>
-    <li class="list-group-item">
-        You will make repeated choices. Once you have made all of the choices, one of the choices will be selected at
-        random, and the amount you receive will be determined according to your choice with another random draw. Hence,
-        you should treat each choice as if it were the only one you make! Any choice could be the one that ultimately
-        matters.
-    </li>
-    <li class="list-group-item">There are no right or wrong answers! Choose the option that you prefer!
-    </li>
-    <li class="list-group-item">The experiment consists of altogether four decision making tasks, which are presented to
-        you multiple times across three rounds. The rules of the task remain the same, but in each round there will be
-        another source of payoffs. We will explain the details of the additional payoffs, once the round starts. Only
-        once round will be chosen at the end and paid out.
-    </li>
-    <li class="list-group-item">In all rounds you will face different wheels of fortune that determine an additional
-        payoff. While you complete the decision making tasks, a lottery will be played. The lottery is depending on the
-        outcome of the spinning wheel you see here: The wheels look like this:
-        <div class="text-center">
-        <img src="{% static 'global/img/example_circle.png'%}" alt="example of spinning wheel" height="200px"></div>
-        </li>
-
-    <li class="list-group-item">The wheels will spin while you make you decisions – and each wheel will stop when you
-        reach the end of the respective round. However, you will not learn the outcome until the end of the study.
-
-    </li>
-
-</ul>
+{% include 'umbrella/instructions/overall.html'%}
 
 
 {% next_button%}
