@@ -11,10 +11,13 @@
 {% block body_main %}
 {% block progress %}
 
-<nav class="navbar navbar-light bg-light  d-flex fixed-top ">
+<nav class="navbar navbar-light bg-light  d-flex fixed-top flex-nowrap ">
 
 
+{% if  instructions %}
+<button class="btn btn-success btn-sm mx-2">Instructions</button>
 
+{% endif %}
 
     <div class="progress" style="height:30px;width:100%;margin-top:0px">
         <div class="progress-bar" role="progressbar" style="width: {{ progress }}%" aria-valuenow="{{ progress }}"
