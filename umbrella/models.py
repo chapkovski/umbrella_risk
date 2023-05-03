@@ -66,6 +66,9 @@ class Subsession(BaseSubsession):
                 apps = Constants.APPS.copy()
                 random.shuffle(apps)
                 p.vars['appseq'] = apps
+                p.vars['payable_app'] = random.choice(apps)
+                p.vars['payable_round'] = random.randint(1, Constants.num_rounds)
+                p.vars['lottery_outcome'] = random.uniform(0,360)
 
         for p in self.get_players():
             p.treatment = p.participant.vars['treatments'][self.round_number-1]
@@ -73,7 +76,9 @@ class Subsession(BaseSubsession):
             treatment_params = Constants.treatment_correspodence[p.treatment]
             p.risk = treatment_params.get('risk')(p)
             p.cover = treatment_params.get('cover')
-
+            p.payable_app=p.participant.vars.get('payable_app')
+            p.payable_round=p.participant.vars.get('payable_round')
+            p.lottery_outcome=p.participant.vars.get('lottery_outcome')
 
 class Group(BaseGroup):
     pass
