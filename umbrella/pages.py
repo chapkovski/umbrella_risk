@@ -143,6 +143,11 @@ class QuizForTreatment(Page):
 
 
 class LotteryResults(Page):
+    def vars_for_template(self):
+        # TODO: it's stupid but for now let's do it right here for debuggin reasons. 
+        # TODO: let's move it later to P4's BNP
+        self.player.set_final_payoffs()
+        return {}
     pass
     # def is_displayed(self):
     #     return self.round_number == Constants.num_rounds

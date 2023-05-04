@@ -10,7 +10,7 @@ On each of the 4 following pages you will see the spinning wheel on left bottom 
 the outcome will define the result of the lottery.
  
     {% next_button %}
-{% include 'umbrella/includes/singlecircle.html'%}
+{% include 'umbrella/includes/singlecircle.html' with result=False risk=player.risk lottery_outcome=player.lottery_outcome|json  cover=player.cover|json %}</li>
 {% endblock %}
 {% block styles %}
  

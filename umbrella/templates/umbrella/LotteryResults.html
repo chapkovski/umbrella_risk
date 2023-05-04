@@ -9,8 +9,10 @@ Payoff screen
 
 
 
-<div class=" font-style-italic font-italic fst-italic  lead font-weight-bold">ATTENTION: this page will be shown
-    as the very last page. Here we show it for our own internal debugging reasons (so we don't need to go through all
+<div style='color:red' class=" font-danger font-style-italic font-italic fst-italic  lead font-weight-bold">
+NOTE FROM PHILIPP! this page will be shown
+    as the very last page after all three treatments are played. 
+    Here we show it for our own internal debugging reasons (so we don't need to go through all
     the decisions before seeing it!)</div>
 
 <ul class="list-group list-group-flush my-3">
@@ -20,13 +22,26 @@ lottery from room (task) {{participant.vars.payable_round}} is payoff relevant. 
 
     </li>
     <li class="list-group-item">
-    From the choices you made, task X[random] was randomly determined to be paid out
+    {% include 'umbrella/includes/singlecircle.html' with result=True risk=player.payable_risk lottery_outcome=player.payable_lottery_outcome  cover=False %}</li>
+      <li class="list-group-item ">
+   
+       Thus your payoff from this additional lottery  is <b>{{player.background_payoff }}</b>.
+
+    </li>
+    <li class="list-group-item">
+    From the choices you made, task  {{player.payable_task_num}} was randomly determined to be paid out.
 
 
     </li>
+    <li class="list-group-item ">
+   
+       Your payoff from this task is <b>{{player.felix_payoff}}</b>.
+
+    </li>
+
     <li class="list-group-item font-weight-bold ">
    
-        Hence, your final payoff is: SUM €.
+        Hence, your final payoff is: {{player.payoff}}.
 
     </li>
 </ul>

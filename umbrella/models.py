@@ -25,6 +25,8 @@ class Constants(BaseConstants):
     name_in_url = 'umbrella'
     players_per_group = None
     num_rounds = 3
+    control_win=5
+    risk_win=10
     TREATMENTS = [
         'risk',
         'ambiguity',
@@ -67,7 +69,9 @@ class Subsession(BaseSubsession):
                 random.shuffle(apps)
                 p.vars['appseq'] = apps
                 p.vars['payable_app'] = random.choice(apps)
-                p.vars['payable_round'] = random.randint(1, Constants.num_rounds)
+                p.vars['payable_task_num']=apps.index(p.vars['payable_app'])+1
+                # p.vars['payable_round'] = random.randint(1, Constants.num_rounds)
+                p.vars['payable_round'] = 1 # TODO!!!! NB!!!! remove - just for deebugging
                 p.vars['lottery_outcome'] = random.uniform(0,360)
 
         for p in self.get_players():
@@ -77,14 +81,36 @@ class Subsession(BaseSubsession):
             p.risk = treatment_params.get('risk')(p)
             p.cover = treatment_params.get('cover')
             p.payable_app=p.participant.vars.get('payable_app')
+            p.payable_task_num=p.participant.vars.get('payable_task_num')
             p.payable_round=p.participant.vars.get('payable_round')
             p.lottery_outcome=p.participant.vars.get('lottery_outcome')
-
+            p.bin_lottery_outcome=p.lottery_outcome>=360*(1-p.risk/100)
+        
 class Group(BaseGroup):
     pass
 
 
 class Player(BasePlayer):
+    def set_final_payoffs(self):
+        p=self
+        payable_player = p.in_round(p.payable_round)
+        payable_app=payable_player.payable_app
+        self.felix_payoff= getattr(self, f'{payable_app.lower()}_payoff')
+        if p.payable_treatment=='control':
+            base_payoff=Constants.control_win
+        else:
+            base_payoff=Constants.risk_win
+        self.background_payoff = p.payable_bin_lottery_outcome*base_payoff
+        
+        self.payoff=self.background_payoff+self.felix_payoff
+    def start(self):
+        p=self
+        payable_player = p.in_round(p.payable_round)
+        
+        p.payable_risk = payable_player.risk
+        p.payable_lottery_outcome=payable_player.lottery_outcome
+        p.payable_bin_lottery_outcome=payable_player.bin_lottery_outcome
+        p.payable_treatment=payable_player.treatment
     bret_payoff = models.CurrencyField()
     cem_payoff = models.CurrencyField()
     mpl_payoff = models.CurrencyField()
@@ -97,8 +123,15 @@ class Player(BasePlayer):
     risk = models.IntegerField()
     payable_round = models.IntegerField()
     payable_app = models.StringField()
+    payable_task_num = models.IntegerField()
+    payable_risk = models.IntegerField()
+    payable_lottery_outcome=models.FloatField()
+    payable_bin_lottery_outcome=models.BooleanField()
+    payable_treatment=models.StringField()
     lottery_outcome = models.FloatField()
-
+    bin_lottery_outcome = models.BooleanField()
+    background_payoff=models.CurrencyField()
+    felix_payoff=models.CurrencyField()
     def get_apps(self):
         return self.participant.vars['appseq']
 
