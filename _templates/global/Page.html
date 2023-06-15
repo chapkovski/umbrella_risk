@@ -13,7 +13,11 @@
 {{block.super}}
 {% endblock progress %}
 {% include 'umbrella/includes/singlecircle.html' with result=False risk=player.risk lottery_outcome=player.lottery_outcome|json  cover=player.cover|json %}</li>
-
+<style>
+.otree-body{
+    margin-top: 200px!important;
+}
+</style>
 <div class="otree-body container "  >
     <h2 class="otree-title page-header mt-5">{% block title %}{% endblock %}</h2>
     {% if view.remaining_timeout_seconds != None %}

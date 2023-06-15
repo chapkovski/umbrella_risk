@@ -38,7 +38,7 @@ class Constants(BaseConstants):
         dict(name="T6-RC", treatments=["risk", "control"]),
         dict(name="T7-AC", treatments=["ambiguity", "control"]),
     ]
-    APPS = ["BRET", "CEM", "MPL", "SCL"]
+    APPS = [  "CEM", "MPL", "SCL"]
     treatment_correspodence = dict(
         control=dict(cover=False, risk=lambda x: 100),
         risk=dict(cover=False, risk=lambda x: x.session.config.get("risk", 50)),
@@ -51,7 +51,7 @@ class Subsession(BaseSubsession):
         pass
 
     def creating_session(self):
-        session_creator.bret.creating_session(self)
+        # session_creator.bret.creating_session(self)
         session_creator.cem.creating_session(self)
         session_creator.mpl.creating_session(self)
         session_creator.scl.creating_session(self)

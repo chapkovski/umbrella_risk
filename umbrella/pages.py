@@ -4,12 +4,22 @@ from .models import Constants
 from . import gamepages
 
 SECTIONS = ["Instructions", "Part 1", "Part 2", "Final part"]
+SUBSECTIONS=['Intro', 'Task A', 'Task B', 'Task C']
 
-
+class PartMixin:
+    show_subsections=True
+    
+    @property
+    def active_section(self):
+        if self.round_number==1:
+            return 'Part 1' 
+        else:
+            return 'Part 2'
 class Page(oTreePage):
     instructions = False
     active_section = None
-
+    show_subsections=False
+    active_subsection = None
     def get_context_data(self, **context):
         r = super().get_context_data(**context)
         r["maxpages"] = self.participant._max_page_index
@@ -22,16 +32,22 @@ class Page(oTreePage):
             dict(name=i, active="active" if i == self.active_section else "")
             for i in SECTIONS
         ]
+        subsections=[
+            dict(name=i, active="active" if i == self.active_subsection else "")
+            for i in SUBSECTIONS
+        ]
+        r['subsections']=subsections if self.show_subsections else False
         return r
 
 
-class SecondPage(Page):
+class SecondPage(PartMixin,Page):
     active_section = "Instructions"
+    active_subsection='Intro'
     pass
 
 
 # print(getattr(gamepages, 'BretPage').template_name)
-class _InnerTask(Page):
+class _InnerTask(PartMixin, Page):
     num_task = None
     type = None
 
@@ -79,35 +95,35 @@ class GeneralTask(_InnerTask):
 
 
 class InstructionsP1(GeneralInstructions):
+    active_subsection='Task A'
     num_task = 1
 
 
 class P1(GeneralTask):
+    active_subsection='Task A'
     num_task = 1
 
 
 class InstructionsP2(GeneralInstructions):
+    active_subsection='Task B'
     num_task = 2
 
 
 class P2(GeneralTask):
+    active_subsection='Task B'
     num_task = 2
 
 
 class InstructionsP3(GeneralInstructions):
+    active_subsection='Task C'
     num_task = 3
 
 
 class P3(GeneralTask):
+    active_subsection='Task C'
     num_task = 3
 
-
-class InstructionsP4(GeneralInstructions):
-    num_task = 4
-
-
-class P4(GeneralTask):
-    num_task = 4
+ 
 
 
 class ConsentPage(Page):
@@ -127,16 +143,15 @@ class OverallInstructions(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-
-class FirstPage(Page):
-    
-
+class FirstPage(PartMixin,Page, ):
+    active_subsection='Intro'
     def vars_for_template(self):
         return dict(no_risk_perc=100 - self.player.risk)
 
 
 class OverallQuiz(Page):
     active_section = "Instructions"
+    active_subsection='Intro'
     instructions = True
     instructions_path = "umbrella/instructions/overall.html"
     form_model = "player"
@@ -146,9 +161,9 @@ class OverallQuiz(Page):
         return self.round_number == 1
 
 
-class QuizForTreatment(Page):
+class QuizForTreatment(PartMixin,Page):
     instructions = True
-
+    active_subsection='Intro'
     def instructions_path(self):
         return f"umbrella/instructions/{self.player.treatment}.html"
 
@@ -183,7 +198,5 @@ page_sequence = [
     P2,
     InstructionsP3,
     P3,
-    InstructionsP4,
-    P4,
     LotteryResults,
 ]

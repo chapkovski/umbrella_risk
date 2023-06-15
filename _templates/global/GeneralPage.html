@@ -34,7 +34,16 @@
 </div>
 
 {% endif %}
+>
+
+
 <nav class="navbar navbar-light bg-light  d-flex fixed-top flex-nowrap flex-column">
+ <div class="progress" style="height:30px;width:100%;margin-top:0px">
+        <div class="progress-bar" role="progressbar" style="width: {{ progress }}%" aria-valuenow="{{ progress }}"
+            aria-valuemin="0" aria-valuemax="100">
+            <b> {{ progress }}%</b>
+        </div>
+    </div>
 <style>
         #upper{
           display: flex;
@@ -53,8 +62,7 @@
         .nav-item {
             flex-grow: 1;
             text-align: center;
-            border: 1px solid #dee2e6;  /* You can adjust the color and size as needed */
-            border-radius: .25rem;
+            
             box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);  /* Adjust the size and color of the shadow as needed */
             margin: 0 5px;  /* Add some space between items */
         }
@@ -74,7 +82,26 @@
     </nav>
 
 </div>
+{% if subsections %}
 
+
+
+<div id="">
+   
+  <nav class="navbar navbar-expand navbar-light bg-light my-navbar">
+ 
+        <ul class="navbar-nav">
+        {% for section  in  subsections %}
+        <li class="nav-item {{section.active}}">
+                <span class="nav-link">{{section.name}}  </span>
+            </li>
+        {% endfor %}
+            
+        </ul>
+    </nav>
+
+</div>
+{% endif %}
 {% if instructions  %}
 <button class="btn btn-success btn-sm mx-2" data-toggle="modal" data-target="#exampleModal">Instructions</button>
 
@@ -83,20 +110,13 @@
 
 {% endif %}
 
-    <div class="progress" style="height:30px;width:100%;margin-top:0px">
-        <div class="progress-bar" role="progressbar" style="width: {{ progress }}%" aria-valuenow="{{ progress }}"
-            aria-valuemin="0" aria-valuemax="100">
-            <b> {{ progress }}%</b>
-        </div>
-    </div>
-
-
+   
 
 </nav>
 {% endblock %}
 
 
-<div class="otree-body container mt-3"  >
+<div class="otree-body container mt-5"  style="margin-top:100px!important;" >
     <h2 class="otree-title page-header">{% block title %}{% endblock %}</h2>
     {% if view.remaining_timeout_seconds != None %}
     {% include 'otree/includes/TimeLimit.html' with form_element_id="form" %}
