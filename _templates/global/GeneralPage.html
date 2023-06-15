@@ -34,8 +34,46 @@
 </div>
 
 {% endif %}
-<nav class="navbar navbar-light bg-light  d-flex fixed-top flex-nowrap ">
+<nav class="navbar navbar-light bg-light  d-flex fixed-top flex-nowrap flex-column">
+<style>
+        #upper{
+          display: flex;
+          width: 100%;
+        }
+        .navbar-nav {
+            width: 100%;
+            justify-content: space-between;
+        }
+        .my-navbar{
+          flex-basis: 100%;
+        }
+        .nav-item.active{
+          background:yellow
+        }
+        .nav-item {
+            flex-grow: 1;
+            text-align: center;
+            border: 1px solid #dee2e6;  /* You can adjust the color and size as needed */
+            border-radius: .25rem;
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);  /* Adjust the size and color of the shadow as needed */
+            margin: 0 5px;  /* Add some space between items */
+        }
+    </style>
+<div id="upper">
+   
+  <nav class="navbar navbar-expand navbar-light bg-light my-navbar">
+ 
+        <ul class="navbar-nav">
+        {% for section  in  sections %}
+        <li class="nav-item {{section.active}}">
+                <span class="nav-link">{{section.name}}  </span>
+            </li>
+        {% endfor %}
+            
+        </ul>
+    </nav>
 
+</div>
 
 {% if instructions  %}
 <button class="btn btn-success btn-sm mx-2" data-toggle="modal" data-target="#exampleModal">Instructions</button>

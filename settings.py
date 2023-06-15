@@ -9,7 +9,7 @@ SESSION_CONFIGS = [
     dict(
         name='umbrella',
         #    display_name="Control",
-        num_demo_participants=3,
+        num_demo_participants=14,
         app_sequence=app_seq,
 
     ),
