@@ -144,6 +144,7 @@ class OverallInstructions(Page):
         return self.round_number == 1
 
 class FirstPage(PartMixin,Page, ):
+    timeout_seconds=10
     active_subsection='Intro'
     def vars_for_template(self):
         return dict(no_risk_perc=100 - self.player.risk)

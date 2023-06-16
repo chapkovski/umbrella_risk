@@ -10,6 +10,7 @@
 
 {% block body_main %}
 {% block progress %}
+
 {% if instructions %}
 
 <!-- Modal -->
@@ -23,119 +24,141 @@
         </button>
       </div>
       <div class="modal-body">
-{% include  view.instructions_path %}
+        {% include view.instructions_path %}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        
+
       </div>
     </div>
   </div>
 </div>
 
 {% endif %}
->
-
 
 <nav class="navbar navbar-light bg-light  d-flex fixed-top flex-nowrap flex-column">
- <div class="progress" style="height:30px;width:100%;margin-top:0px">
-        <div class="progress-bar" role="progressbar" style="width: {{ progress }}%" aria-valuenow="{{ progress }}"
-            aria-valuemin="0" aria-valuemax="100">
-            <b> {{ progress }}%</b>
-        </div>
+
+  <div class="d-flex flex-nowrap" style="height:30px;width:100%;margin-top:0px">
+    <div class="progress" style="height:30px;width:100%;margin-top:0px">
+      <div class="progress-bar" role="progressbar" style="width: {{ progress }}%" aria-valuenow="{{ progress }}"
+        aria-valuemin="0" aria-valuemax="100">
+        <b> {{ progress }}%</b>
+      </div>
     </div>
-<style>
-        #upper{
-          display: flex;
-          width: 100%;
-        }
-        .navbar-nav {
-            width: 100%;
-            justify-content: space-between;
-        }
-        .my-navbar{
-          flex-basis: 100%;
-        }
-        .nav-item.active{
-          background:yellow
-        }
-        .nav-item {
-            flex-grow: 1;
-            text-align: center;
-            
-            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);  /* Adjust the size and color of the shadow as needed */
-            margin: 0 5px;  /* Add some space between items */
-        }
-    </style>
-<div id="upper">
-   
-  <nav class="navbar navbar-expand navbar-light bg-light my-navbar">
- 
-        <ul class="navbar-nav">
-        {% for section  in  sections %}
+    {% if instructions %}
+    <button class="btn btn-success btn-sm mx-2" data-toggle="modal" data-target="#exampleModal">Instructions</button>
+    {% endif %}
+  </div>
+
+  <style>
+    #upper {
+      display: flex;
+      width: 100%;
+    }
+
+    .navbar {
+      padding-top: 2px;
+      padding-bottom: 3px;
+    }
+
+    .navbar-nav {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .my-navbar {
+      flex-basis: 100%;
+    }
+
+    .nav-item.active {
+      background: yellow
+    }
+
+    .nav-link {
+      padding: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    #downer {
+      min-width: 500px;
+    }
+
+    .nav-item {
+      padding: 0 !important;
+      flex-grow: 1;
+      text-align: center;
+
+      box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+      /* Adjust the size and color of the shadow as needed */
+      margin: 0 5px;
+      /* Add some space between items */
+    }
+  </style>
+  <div id="upper" class="mt-1">
+
+    <nav class="navbar navbar-expand navbar-light bg-light my-navbar">
+
+      <ul class="navbar-nav">
+        {% for section in sections %}
         <li class="nav-item {{section.active}}">
-                <span class="nav-link">{{section.name}}  </span>
-            </li>
+          <span class="nav-link">{{section.name}} </span>
+        </li>
         {% endfor %}
-            
-        </ul>
+
+      </ul>
     </nav>
 
-</div>
-{% if subsections %}
+  </div>
+  {% if subsections %}
 
 
 
-<div id="">
-   
-  <nav class="navbar navbar-expand navbar-light bg-light my-navbar">
- 
-        <ul class="navbar-nav">
-        {% for section  in  subsections %}
+  <div id="downer">
+
+    <nav class="navbar navbar-expand navbar-light bg-light my-navbar">
+
+      <ul class="navbar-nav">
+        {% for section in subsections %}
         <li class="nav-item {{section.active}}">
-                <span class="nav-link">{{section.name}}  </span>
-            </li>
+          <span class="nav-link">{{section.name}} </span>
+        </li>
         {% endfor %}
-            
-        </ul>
+
+      </ul>
     </nav>
 
-</div>
-{% endif %}
-{% if instructions  %}
-<button class="btn btn-success btn-sm mx-2" data-toggle="modal" data-target="#exampleModal">Instructions</button>
+  </div>
+  {% endif %}
 
 
 
-
-{% endif %}
-
-   
 
 </nav>
+
 {% endblock %}
 
 
-<div class="otree-body container mt-5"  style="margin-top:100px!important;" >
-    <h2 class="otree-title page-header">{% block title %}{% endblock %}</h2>
-    {% if view.remaining_timeout_seconds != None %}
-    {% include 'otree/includes/TimeLimit.html' with form_element_id="form" %}
-    {% endif %}
-    {% if form.errors %}
-    <div class="otree-form-errors alert alert-danger">
-        {% blocktrans trimmed %}Please fix the errors in the form.{% endblocktrans %}
-        {{ form.non_field_errors }}
-    </div>
-    {% endif %}{% if js_vars|default:False %}
-    <script>var js_vars = {{ js_vars| json }};</script>{% endif %}
-    <form class="otree-form" method="post" role="form" id="form" autocomplete="off">{% csrf_token %}
-        <div class="_otree-content">{% block content %}{% endblock %}</div>
-    </form>
-    <br />
-    {# need the default:False for projects with old MTurkLandingPage #}
-    {% if view.is_debug|default:False %}
-    <br>
-    {% include 'otree/includes/debug_info.html' %}
-    {% endif %}
+<div class="otree-body container mt-5" style="margin-top:100px!important;">
+  <h2 class="otree-title page-header">{% block title %}{% endblock %}</h2>
+  {% if view.remaining_timeout_seconds != None %}
+  {% include 'otree/includes/TimeLimit.html' with form_element_id="form" %}
+  {% endif %}
+  {% if form.errors %}
+  <div class="otree-form-errors alert alert-danger">
+    {% blocktrans trimmed %}Please fix the errors in the form.{% endblocktrans %}
+    {{ form.non_field_errors }}
+  </div>
+  {% endif %}{% if js_vars|default:False %}
+  <script>var js_vars = {{ js_vars| json }};</script>{% endif %}
+  <form class="otree-form" method="post" role="form" id="form" autocomplete="off">{% csrf_token %}
+    <div class="_otree-content">{% block content %}{% endblock %}</div>
+  </form>
+  <br />
+  {# need the default:False for projects with old MTurkLandingPage #}
+  {% if view.is_debug|default:False %}
+  <br>
+  {% include 'otree/includes/debug_info.html' %}
+  {% endif %}
 </div>
 {% endblock %}
