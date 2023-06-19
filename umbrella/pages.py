@@ -3,7 +3,7 @@ from ._builtin import Page as oTreePage, WaitPage
 from .models import Constants
 from . import gamepages
 
-SECTIONS = ["Instructions", "Part 1", "Part 2", "Final part"]
+SECTIONS = ["Instructions", "Part 1", "Part 2", "Payoff Screen"]
 SUBSECTIONS=['Intro', 'Task A', 'Task B', 'Task C']
 
 class PartMixin:
@@ -144,7 +144,7 @@ class OverallInstructions(Page):
         return self.round_number == 1
 
 class FirstPage(PartMixin,Page, ):
-    timeout_seconds=10
+    
     active_subsection='Intro'
     def vars_for_template(self):
         return dict(no_risk_perc=100 - self.player.risk)
@@ -173,8 +173,11 @@ class QuizForTreatment(PartMixin,Page):
     def get_form_fields(self):
         return [f"cq_{self.player.treatment}"]
 
-
-class LotteryResults(Page):
+class EndOfPart(PartMixin,Page):
+    pass
+    
+class LotteryResults( Page):
+    active_section = "Payoff Screen"
     def vars_for_template(self):
         # TODO: it's stupid but for now let's do it right here for debuggin reasons.
         # TODO: let's move it later to P4's BNP
@@ -182,8 +185,8 @@ class LotteryResults(Page):
         return {}
 
     pass
-    # def is_displayed(self):
-    #     return self.round_number == Constants.num_rounds
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
 
 
 page_sequence = [
@@ -199,5 +202,6 @@ page_sequence = [
     P2,
     InstructionsP3,
     P3,
+    EndOfPart,
     LotteryResults,
 ]

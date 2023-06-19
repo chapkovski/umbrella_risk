@@ -2,20 +2,21 @@
 {% load otree static %}
 
 {% block title %}
-    Example of the lottery wheel - {{player.treatment}}.
+Example of the lottery wheel - {{player.treatment}}.
 {% endblock %}
 
 {% block content %}
-On each of the 4 following pages you will see the spinning wheel on left bottom corner. When it stops spinning
-the outcome will define the result of the lottery.
- 
-    {% next_button %}
-{% include 'umbrella/includes/singlecircle.html' with result=False risk=player.risk lottery_outcome=player.lottery_outcome|json  cover=player.cover|json %}</li>
+On each page in Part {{view.round_number}} you will see the spinning wheel on left bottom corner of your screen. The
+wheel is stopped at the end of Part {{view.round_number}}. You will learn the outcome of the wheel in the final part of the study.
+
+
+<div class="my-3">{% next_button %}</div>
+{% include 'umbrella/includes/singlecircle.html' with result=False risk=player.risk lottery_outcome=player.lottery_outcome|json cover=player.cover|json %}</li>
 {% endblock %}
 {% block styles %}
- 
 
-{% endblock  %}
+
+{% endblock %}
 {% block scripts %}
-   
-{% endblock  %}
+
+{% endblock %}

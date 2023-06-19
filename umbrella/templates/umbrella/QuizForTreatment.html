@@ -10,7 +10,7 @@
  
 
 {% formfields %}
-
+{% include 'umbrella/includes/singlecircle.html' with result=False risk=player.risk lottery_outcome=player.lottery_outcome|json  cover=player.cover|json %}</li>
  
     {% next_button %}
 

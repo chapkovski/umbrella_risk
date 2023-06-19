@@ -1,5 +1,8 @@
 {% load otree static %}
-
+<style>
+.otree-body {
+    max-width: 800px!important;
+}</style>
 <script>
     window.showColor = !({{ player.cover | json }});
     window.selectedRisk = {{ risk|json  }};
