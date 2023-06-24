@@ -3,6 +3,7 @@ from os import environ
 app_seq = [
 
     'umbrella',
+    'q',
 
 ]
 SESSION_CONFIGS = [

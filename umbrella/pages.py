@@ -2,9 +2,9 @@ from otree.api import Currency as c, currency_range
 from ._builtin import Page as oTreePage, WaitPage
 from .models import Constants
 from . import gamepages
-
+from pprint import pprint
 SECTIONS = ["Instructions", "Part 1", "Part 2", "Payoff Screen"]
-SUBSECTIONS=['Intro', 'Task A', 'Task B', 'Task C']
+SUBSECTIONS=['Intro', 'Task A', 'Task B', 'Task C' ,'Task D']
 
 class PartMixin:
     show_subsections=True
@@ -36,6 +36,7 @@ class Page(oTreePage):
             dict(name=i, active="active" if i == self.active_subsection else "")
             for i in SUBSECTIONS
         ]
+        
         r['subsections']=subsections if self.show_subsections else False
         return r
 
@@ -123,6 +124,14 @@ class P3(GeneralTask):
     active_subsection='Task C'
     num_task = 3
 
+class InstructionsP4(GeneralInstructions):
+    active_subsection='Task D'
+    num_task = 4
+
+
+class P4(GeneralTask):
+    active_subsection='Task D'
+    num_task = 4
  
 
 
@@ -202,6 +211,8 @@ page_sequence = [
     P2,
     InstructionsP3,
     P3,
+    InstructionsP4,
+    P4,
     EndOfPart,
     LotteryResults,
 ]

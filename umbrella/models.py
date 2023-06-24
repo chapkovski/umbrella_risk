@@ -38,7 +38,7 @@ class Constants(BaseConstants):
         dict(name="T6-RC", treatments=["risk", "control"]),
         dict(name="T7-AC", treatments=["ambiguity", "control"]),
     ]
-    APPS = [  "CEM", "MPL", "SCL"]
+    APPS = [  "CEM", "MPL", "SCL", "BRET"]
     treatment_correspodence = dict(
         control=dict(cover=False, risk=lambda x: 100),
         risk=dict(cover=False, risk=lambda x: x.session.config.get("risk", 50)),
