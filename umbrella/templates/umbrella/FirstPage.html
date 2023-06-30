@@ -11,30 +11,17 @@ Part {{view.round_number}} - introduction
     <div class="card-body">
 
 
-        {% if player.treatment == 'risk' %}
-        In this part you have the opportunity to receive an additional 10€. Whether you will receive 10€ depends on the
-        outcome of <b>another</b> wheel of fortune, regardless of what else happens during this study. Please
-        familiarize
-        yourself with the possible outcomes for all the wheels that may be relevant in this part. Click on each wheel to
-        reveal the probabilities.
+        <div>
+            In this part, one of the wheels of fortune below determines one part of your bonus payoff. This outcome is
+            independent of what else happens during this study. Please familiarize yourself with the possible outcomes
+            for
+            all the wheels relevant in this part.</div>
+        <div>
+            Before you can start this round you have to click on all the wheels of fortune to see their distribution of
+            red
+            and green areas. Once you have clicked on all wheels of fortune, the one relevant for this round will be
+            highlighted.</div>
 
-
-        {% endif %}
-        {% if player.treatment == 'control' %}
-        In this part, a wheel of fortune determines one part of your bonus payoff. This outcome is independent of what
-        else
-        happens during this study.
-        Please familiarize yourself with the possible outcomes for all the wheels relevant in
-        this part.
-        {% endif %}
-        {% if player.treatment == 'ambiguity' %}
-         In this part you have the opportunity to receive an additional 10€. Whether you will receive 10€ depends on the
-        outcome of <b>another</b> wheel of fortune, regardless of what else happens during this study. Please
-        familiarize
-        yourself with the possible outcomes for all the wheels that may be relevant in this part. Click on each wheel to
-        reveal the probabilities.
-
-        {% endif %}
 
 
 
@@ -56,20 +43,24 @@ Part {{view.round_number}} - introduction
         <div class="card-body">
 
             {% if player.treatment == 'risk' %}
-            As you can see the new wheel of fortune relevant for this part is {{player.risk}}% green and {{no_risk_perc}}% red. This means, you
-            have <b>a {{player.risk}}% chance to win 10€</b>  if this part is chosen at the end of the experiment as payoff relevant.
+            As you can see the new wheel of fortune relevant for this part is {{player.risk}}% green and
+            {{no_risk_perc}}% red. This means, you
+            have <b>a {{player.risk}}% chance to win 10€</b> if this part is chosen at the end of the experiment as
+            payoff relevant.
 
- 
+
             {% endif %}
             {% if player.treatment == 'control' %}
 
-            As you can see the wheel of fortune relevant for this part is only green. This means, you will receive {{ session.config.participation_fee }} for sure, if this part is chosen at the end of the experiment as the
+            As you can see the wheel of fortune relevant for this part is only green. This means, you will receive
+            {{session.config.participation_fee }} for sure, if this part is chosen at the end of the experiment as the
             payoff relevant part.
 
 
             {% endif %}
             {% if player.treatment == 'ambiguity' %}
-            In this part we will not tell you which of the wheels will be payoff relevant. For this reason, the probabilities
+            In this part we will not tell you which of the wheels will be payoff relevant. For this reason, the
+            probabilities
             for winning and losing are unknown. They are somewhere between 1% and 99%. This means, we the chance to win
             10€ is between 1%-99% if this part is chosen at the end of the experiment as the
             payoff relevant part.
