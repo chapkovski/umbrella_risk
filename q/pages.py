@@ -1,7 +1,12 @@
 from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
+import json
+import logging
 
+PRODUCER = "P"
+INTERPRETER = "I"
+logger = logging.getLogger("umbrella.q")
 
 class Q(Page):
     form_model = "player"
@@ -14,5 +19,24 @@ class Q(Page):
         "instructions_clarity",
     ]
 
+class Big5(Page):
+    def post(self):
+        try:
+            data = json.loads(self.request.POST.get('surveyholder')).get('big5')
+            print(data)
+            
+            if data:
+                for k, v in data.items():
+                    setattr(self.player, k, v.get('col1'))
+        except Exception as e:
+            print(e)
+            logger.error('cant get data from big5 questionnaire')
+        return super().post()
 
-page_sequence = [Q]
+     
+
+
+page_sequence = [
+    Q,
+    Big5,
+    ]

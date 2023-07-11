@@ -17,10 +17,11 @@ class Constants(BaseConstants):
     # "high" and "low" outcomes (in currency units set in settings.py) of "lottery A" and "lottery B"
     # note that payoffs are identical for all choices and only probabilities of "high" and "low" outcomes change
     ### Holzmeister & Stefan used a scaling of H+L (2006) * 5 we used half of that, which is scaling it by 2.5
-    lottery_a_hi = 5 # 10.00
-    lottery_a_lo = 4 # 8.00
-    lottery_b_hi = 9.625 #19.25
-    lottery_b_lo = 0.25 #0.50
+    scale=2.5
+    lottery_a_hi = 5/scale # 10.00
+    lottery_a_lo = 4/scale # 8.00
+    lottery_b_hi = 9.625/scale #19.25
+    lottery_b_lo = 0.25/scale #0.50
 
     # number of binary choices between "lottery A" and "lottery B"
     # note that the number of choices determines the probabilities of high and low outcomes of lotteries "A" and "B"

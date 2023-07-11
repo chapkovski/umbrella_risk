@@ -1,0 +1,91 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+
+{% endblock %}
+
+
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/survey-jquery/1.9.96/survey.jquery.min.js"
+    integrity="sha512-YFtYD3P5n0bJsjaeSYRu4ePxLLg9TAXGCg+YS2o4iixxdz/gxMF8n/qqMsA3M+KvXlfWMGUt0k46bSlEtxaBgw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+    label.btn.btn-default.btn-secondary.active {
+        background: yellow;
+        color: black;
+    }
+</style>
+
+
+<div id="surveyElement" style="display:inline-block;width:100%;"></div>
+<div id="surveyResult"></div>
+<input type="hidden" id="surveyholder" name="surveyholder">
+<script>
+    Survey.defaultBootstrapCss.navigationButton = "btn-primary btn-lg";
+    Survey
+        .StylesManager
+        .applyTheme("bootstrap");
+
+    var json = {
+        requiredText: '',
+        showQuestionNumbers: "off",
+        showCompletedPage: false,
+        completeText: "Next",
+        questions: [
+            {
+                type: "matrixdropdown",
+                name: "big5",
+                title: "I see myself as someone who...",
+
+                columns: [
+                    {
+                        name: "col1",
+                        cellType: "radiogroup",
+                        showInMultipleColumns: true,
+                        isRequired: true,
+                        choices: [
+                            { value: 1, text: "Totally disagree" },
+                            { value: 2, text: "Somewhat disagree" },
+                            { value: 3, text: "Neither agree nor disagree" },
+                            { value: 4, text: "Somewhat agree" },
+                            { value: 5, text: "Absolutely agree" },
+                            { value: 999, text: "Hard to say" }]
+                    },
+                ],
+                rows: [
+                    { value: 'big5_1', text: ' is reserved' },
+                    { value: 'big5_2', text: 'is generally trusting' },
+                    { value: 'big5_3', text: 'tends to be lazy' },
+                    { value: 'big5_4', text: 'is relaxed, handles stress well' },
+                    { value: 'big5_5', text: ' has few artistic interests' },
+                    { value: 'big5_6', text: ' is outgoing, sociable' },
+                    { value: 'big5_7', text: 'tends to find fault with others' },
+                    { value: 'big5_8', text: 'does a thorough job' },
+                    { value: 'big5_9', text: 'gets nervous easily' },
+                    { value: 'big5_10', text: 'has an active imagination' },
+                  
+
+
+                ]
+            }
+        ]
+    };
+
+    window.survey = new Survey.Model(json);
+
+    survey
+        .onComplete
+        .add(function (sender) {
+            document
+            $('#surveyholder').val(JSON.stringify(sender.data, null, 3))
+            $('#form').submit()
+                ;
+        });
+
+    $("#surveyElement").Survey({ model: survey });
+    ;
+</script>
+
+
+{% endblock %}

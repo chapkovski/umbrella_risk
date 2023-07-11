@@ -54,14 +54,17 @@ class Player(BasePlayer):
        """, choices=range(1, 6), widget=widgets.RadioSelectHorizontal)
 
 
-"""
-Age
-
-Gender
-
-Employment
-
-Income
-
-Education
-"""
+    # big5 block
+     # BFI-10 taken from Rammstedt and John 2007; https://doi.org/10.1016/j.jrp.2006.02.001
+    big5_1 = models.IntegerField()
+    big5_2 = models.IntegerField()
+    big5_3 = models.IntegerField()
+    big5_4 = models.IntegerField()
+    big5_5 = models.IntegerField()
+    big5_6 = models.IntegerField()
+    big5_7 = models.IntegerField()
+    big5_8 = models.IntegerField()
+    big5_9 = models.IntegerField()
+    big5_10 = models.IntegerField()
+    
+    # END OF BIG5 block

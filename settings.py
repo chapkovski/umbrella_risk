@@ -8,6 +8,13 @@ app_seq = [
 ]
 SESSION_CONFIGS = [
     dict(
+        name='q',
+           display_name="Post-experimental questionnaire only",
+        num_demo_participants=1,
+        app_sequence=['q'],
+
+    ),
+    dict(
         name='umbrella',
         #    display_name="Control",
         num_demo_participants=14,
@@ -23,7 +30,7 @@ SESSION_CONFIGS = [
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, participation_fee=5.00, doc="",
+    real_world_currency_per_point=1.00, participation_fee=4.00, doc="",
     risk=50
 )
 

@@ -26,8 +26,9 @@ class Constants(BaseConstants):
     name_in_url = "umbrella"
     players_per_group = None
     num_rounds = 2
-    control_win = 5
-    risk_win = 10
+    control_win = 2
+    risk_win = 4
+    max_payoff=c(risk_win)
     TREATMENTS = ["risk", "ambiguity", "control"]
     TREATMENTS = [
         dict(name="T1-CC", treatments=["control", "control"]),
@@ -198,17 +199,17 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
     )
     cq_control = models.StringField(
-        label=" How likely is it, that you receive an additional 5€?",
+        label=f"How likely is it, that you receive an additional {c(Constants.control_win)}?",
         choices=[f"{i}%" for i in range(0, 101, 10)] + ["I do not know"],
         widget=widgets.RadioSelect,
     )
     cq_risk = models.StringField(
-        label="How likely is it, that you receive an additional 10€?",
+        label=f"How likely is it, that you receive an additional {Constants.max_payoff}",
         choices=[f"{i}%" for i in range(0, 101, 10)] + ["I do not know"],
         widget=widgets.RadioSelect,
     )
     cq_ambiguity = models.StringField(
-        label="How likely is it, that you receive an additional 10€?",
+        label=f"How likely is it, that you receive an additional {Constants.max_payoff}",
         choices=[f"{i}%" for i in range(0, 101, 10)] + ["I do not know"],
         widget=widgets.RadioSelect,
     )

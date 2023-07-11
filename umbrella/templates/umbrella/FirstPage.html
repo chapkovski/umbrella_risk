@@ -45,7 +45,7 @@ Part {{view.round_number}} - introduction
             {% if player.treatment == 'risk' %}
             As you can see the new wheel of fortune relevant for this part is {{player.risk}}% green and
             {{no_risk_perc}}% red. This means, you
-            have <b>a {{player.risk}}% chance to win 10€</b> if this part is chosen at the end of the experiment as
+            have <b>a {{player.risk}}% chance to win  {{Constants.max_payoff|c}}</b> if this part is chosen at the end of the experiment as
             payoff relevant.
 
 
@@ -62,7 +62,7 @@ Part {{view.round_number}} - introduction
             In this part we will not tell you which of the wheels will be payoff relevant. For this reason, the
             probabilities
             for winning and losing are unknown. They are somewhere between 1% and 99%. This means, we the chance to win
-            10€ is between 1%-99% if this part is chosen at the end of the experiment as the
+            {{Constants.max_payoff|c}} is between 1%-99% if this part is chosen at the end of the experiment as the
             payoff relevant part.
             {% endif %}
 

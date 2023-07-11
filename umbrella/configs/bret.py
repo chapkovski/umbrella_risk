@@ -18,7 +18,7 @@ class Constants(BaseConstants):
     # if the bomb is not collected, player's payoff per round is determined by <box_value> times <boxes_collected>
     # note that the currency of any earnings is determined by the oTree settings in settings.py
     # if you set this to a decimal number, you must set POINTS_DECIMAL_PLACES in settings.py
-    box_value = cu(0.25)
+    box_value = cu(0.04)
 
     # number of rows and columns
     # i.e. the total number of boxes is determined by <num_rows> times <num_cols>
