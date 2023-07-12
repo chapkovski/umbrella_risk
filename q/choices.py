@@ -34,8 +34,8 @@ MARITAL_CHOICES = ["Single (never married)",
 "Divorced", 
 "Separated", ]
 EMPLOYMENT_CHOICES = [
-   "Employed full time (40 or more hours per week)", 
-"Employed part time (up to 39 hours per week)", 
+   "Employed full time (35 or more hours per week)", 
+"Employed part time (up to 34 hours per week)", 
 "Unemployed and currently looking for work", 
 "Unemployed not currently looking for work", 
 "Student", 

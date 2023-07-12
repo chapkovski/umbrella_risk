@@ -10,7 +10,7 @@
 <div class="text-center d-flex flex-column">
     <div class="display-1">End of Part {{view.round_number}}.</div>
     <div class="lead">
-        The first wheel of fortune has stopped.
+        The {% if view.round_number == 1 %}        first        {% else %} second        {% endif %} wheel of fortune has stopped.
 
 
     </div>

@@ -28,7 +28,8 @@ class Constants(BaseConstants):
     num_rounds = 2
     control_win = 2
     risk_win = 4
-    max_payoff=c(risk_win)
+    control_payoff = c(control_win)
+    max_payoff = c(risk_win)
     TREATMENTS = ["risk", "ambiguity", "control"]
     TREATMENTS = [
         dict(name="T1-CC", treatments=["control", "control"]),
@@ -39,7 +40,7 @@ class Constants(BaseConstants):
         dict(name="T6-RC", treatments=["risk", "control"]),
         dict(name="T7-AC", treatments=["ambiguity", "control"]),
     ]
-    APPS = [  "CEM", "MPL", "SCL", "BRET"]
+    APPS = ["CEM", "MPL", "SCL", "BRET"]
     treatment_correspodence = dict(
         control=dict(cover=False, risk=lambda x: 100),
         risk=dict(cover=False, risk=lambda x: x.session.config.get("risk", 50)),
@@ -76,7 +77,7 @@ class Subsession(BaseSubsession):
                 p.vars["lottery_outcome"] = random.uniform(0, 360)
 
         for p in self.get_players():
-            p.glob_treatment=p.participant.vars['treatment_set']['name']
+            p.glob_treatment = p.participant.vars["treatment_set"]["name"]
             p.treatment = p.participant.vars["treatments"][self.round_number - 1]
             p.appseq = json.dumps(p.participant.vars["appseq"])
             treatment_params = Constants.treatment_correspodence[p.treatment]
@@ -94,6 +95,10 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    @property
+    def no_risk_perc(self):
+        return 100 - self.risk
+
     def set_final_payoffs(self):
         p = self
         payable_player = p.in_round(p.payable_round)
