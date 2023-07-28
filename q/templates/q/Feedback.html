@@ -1,0 +1,26 @@
+{% extends "otree/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+Participant Feedback
+{% endblock %}
+
+{% block content %}
+<div class="form-group">
+   
+    <p class="text-muted">We value your input and experience in our study. Please take a few moments to share any
+        comments or thoughts you may have regarding the experiment. This could include, but is not limited to:</p>
+    <ul class="text-muted">
+        <li>Your overall impression of the experiment.</li>
+        <li>Any technical issues you may have encountered.</li>
+        <li>Clarity (or lack thereof) in the instructions provided.</li>
+        <li>Any other aspect of the experiment you'd like to comment on.</li>
+    </ul>
+    <p class="text-muted">Your feedback is extremely important for us to refine and improve our research methodology.
+        Thank you for your time and effort.</p>
+
+</div>
+{% formfields %}
+{% next_button %}
+
+{% endblock %}

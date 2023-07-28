@@ -68,3 +68,7 @@ class Player(BasePlayer):
     big5_10 = models.IntegerField()
     
     # END OF BIG5 block
+
+    feedback=models.LongStringField(
+        label=''
+    )

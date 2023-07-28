@@ -34,9 +34,12 @@ class Big5(Page):
         return super().post()
 
      
-
+class Feedback(Page):
+    form_model='player'
+    form_fields=['feedback']
 
 page_sequence = [
     Q,
     Big5,
+    Feedback,
     ]
