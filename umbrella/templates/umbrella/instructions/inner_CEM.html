@@ -13,15 +13,15 @@
         <p>
             {% blocktrans trimmed with hi=lottery_hi lo=lottery_lo p=probability %}
                 "Option A" is a lottery that pays {{ hi }} with {{ p }} probability and {{ lo }} otherwise;
-                "Option B" yields a varying payoff for sure, i.e. with a probability of 100%.
+                "Option B" yields a varying bonus for sure, i.e. with a probability of 100%.
             {% endblocktrans %}
         </p>
         <p>
             {% blocktrans trimmed with n=Constants.num_choices %}
                 After you have made all of your choices, one of the {{ n }} decisions will be randomly chosen for
                 your payment. If you chose to opt for "Option A" in this decision, it will be randomly determined
-                whether the low or high payoff will constitute your payoff; if you chose to opt for "Option B", the
-                respective sure amount will constitute your payoff.
+                whether the low or high amount will constitute your bonus; if you chose to opt for "Option B", the
+                respective sure amount will constitute your bonus.
             {% endblocktrans %}
         </p>
         <p>

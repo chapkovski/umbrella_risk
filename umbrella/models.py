@@ -40,7 +40,9 @@ class Constants(BaseConstants):
         dict(name="T6-RC", treatments=["risk", "control"]),
         dict(name="T7-AC", treatments=["ambiguity", "control"]),
     ]
-    APPS = ["CEM", "MPL", "SCL", "BRET"]
+    APPS = ["CEM", "MPL", "SCL",
+            # "BRET"
+            ]
     treatment_correspodence = dict(
         control=dict(cover=False, risk=lambda x: 100),
         risk=dict(cover=False, risk=lambda x: x.session.config.get("risk", 50)),
@@ -204,17 +206,17 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
     )
     cq_control = models.StringField(
-        label=f"How likely is it, that you receive an additional {c(Constants.control_win)}?",
+        label=f"How likely is it, that you receive an additional {c(Constants.control_win)}, if this part of the study is determined as the bonus-relevant part?",
         choices=[f"{i}%" for i in range(0, 101, 10)] + ["I do not know"],
         widget=widgets.RadioSelect,
     )
     cq_risk = models.StringField(
-        label=f"How likely is it, that you receive an additional {Constants.max_payoff}",
+        label=f"How likely is it, that you receive an additional {Constants.max_payoff},  if this part of the study is determined as the bonus-relevant part?",
         choices=[f"{i}%" for i in range(0, 101, 10)] + ["I do not know"],
         widget=widgets.RadioSelect,
     )
     cq_ambiguity = models.StringField(
-        label=f"How likely is it, that you receive an additional {Constants.max_payoff}",
+        label=f"How likely is it, that you receive an additional {Constants.max_payoff},  if this part of the study is determined as the bonus-relevant part?",
         choices=[f"{i}%" for i in range(0, 101, 10)] + ["I do not know"],
         widget=widgets.RadioSelect,
     )

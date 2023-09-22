@@ -152,7 +152,35 @@
   {% endif %}{% if js_vars|default:False %}
   <script>var js_vars = {{ js_vars| json }};</script>{% endif %}
   <form class="otree-form" method="post" role="form" id="form" autocomplete="off">{% csrf_token %}
-    <div class="_otree-content">{% block content %}{% endblock %}</div>
+    <div class="_otree-content">
+        {% block outercontent %}
+            <style>
+                .custom-min-width {
+                    min-width: 175px;
+                }
+
+            </style>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="  col-md-3 col-12 custom-min-width
+ {%  if not view.wheel|default_if_none:False %}d-none {% endif %}" >
+                        {% block wheelcontent %}{% endblock %}
+                    </div>
+                    <div class="
+                     {%  if view.wheel|default_if_none:False %} col-md-9{% endif %}
+                    col-12">
+                        {% block content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+
+        {% endblock %}
+
+
+
+    </div>
   </form>
   <br />
   {# need the default:False for projects with old MTurkLandingPage #}

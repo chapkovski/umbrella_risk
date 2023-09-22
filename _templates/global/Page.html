@@ -12,7 +12,7 @@
 {% block progress %}
 {{block.super}}
 {% endblock progress %}
-{% include 'umbrella/includes/singlecircle.html' with result=False risk=player.risk lottery_outcome=player.lottery_outcome|json  cover=player.cover|json %}</li>
+
 <style>
 .otree-body{
     margin-top: 100px!important;
@@ -31,7 +31,84 @@
     {% endif %}{% if js_vars|default:False %}
     <script>var js_vars = {{ js_vars| json }};</script>{% endif %}
     <form class="otree-form" method="post" role="form" id="form" autocomplete="off">{% csrf_token %}
-        <div class="_otree-content">{% block content %}{% endblock %}</div>
+        <div class="_otree-content">
+
+              {% block outercontent %}
+            <style>
+                .custom-min-width {
+                    min-width: 175px;
+                }
+.row {
+  position: relative; /* Optional, but can help */
+  min-height: 100vh;  /* Ensures the row is tall enough to scroll */
+}
+
+
+            </style>
+            <div class="container">
+                <div class="row" style="position: relative">
+
+                    <div class="  col-md-3 col-12 custom-min-width sticky-column" id="stickyColumn">
+
+                        <div id="stickyInnerDiv">
+
+                        {% block wheelcontent %}
+
+                            {% include 'umbrella/includes/singlecircle.html' with result=False risk=player.risk lottery_outcome=player.lottery_outcome|json  cover=player.cover|json %}</li>
+                        {% endblock %}
+                        </div>
+                    </div>
+                    <div class="  col-md-9 col-12">
+                        {% block content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+
+        {% endblock %}
+            <script>
+                $(document).ready(function() {
+  var stickyInnerDiv = $("#stickyInnerDiv");
+  var stickyInnerDivOffset = stickyInnerDiv.offset().top;
+  var initialLeftPosition = stickyInnerDiv.offset().left;
+  var initialWidth = stickyInnerDiv.width();
+
+  $(window).scroll(function() {
+    // Check if the window width is greater than 768px (Bootstrap md breakpoint)
+    if ($(window).width() > 960) {
+      if ($(window).scrollTop() > stickyInnerDivOffset) {
+        stickyInnerDiv.css({
+          "position": "fixed",
+          "top": 100,
+          "left": initialLeftPosition,
+          "width": initialWidth,
+          "z-index": 100
+        });
+      } else {
+        stickyInnerDiv.css({
+          "position": "static",
+          "width": "auto"
+        });
+      }
+    } else {
+      // Reset to static position for small screens
+      stickyInnerDiv.css({
+        "position": "static",
+        "width": "auto"
+      });
+    }
+  });
+
+  // Update initialLeftPosition and initialWidth on window resize
+  $(window).resize(function() {
+    if (stickyInnerDiv.css('position') === 'static') {
+      initialLeftPosition = stickyInnerDiv.offset().left;
+      initialWidth = stickyInnerDiv.width();
+    }
+  });
+});
+
+            </script>
+        </div>
     </form>
     <br />
     {# need the default:False for projects with old MTurkLandingPage #}

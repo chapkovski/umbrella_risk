@@ -12,14 +12,17 @@ Part {{view.round_number}} - introduction
 
 
         <div>
-            In this part, one of the wheels of fortune below determines one part of your bonus payoff. This outcome is
+            In this part, one of the wheels of fortune below determines one part of your bonus. This outcome is
             independent of what else happens during this study. Please familiarize yourself with the possible outcomes
             for
             all the wheels relevant in this part.</div>
         <div>
             Before you can start this part you have to click on all the wheels of fortune to see their distribution of
             red
-            and green areas. Once you have clicked on all wheels of fortune, the one relevant for this part will be
+            and green areas.
+            If the wheel stops at green area, that means positive outcome. If the wheel
+            stops at red area, that means negative outcome.
+            Once you have clicked on all wheels of fortune, the one relevant for this part will be
             highlighted.</div>
 
 
@@ -46,7 +49,7 @@ Part {{view.round_number}} - introduction
             As you can see the new wheel of fortune relevant for this part is {{player.risk}}% green and
             {{no_risk_perc}}% red. This means, you
             have <b>a {{player.risk}}% chance to win  {{Constants.max_payoff|c}}</b>  as an additional bonus if this part is chosen at the end of the experiment as
-            payoff relevant.
+            relevant for the determination of your bonus.
 
 
             {% endif %}
@@ -54,16 +57,16 @@ Part {{view.round_number}} - introduction
 
             As you can see the wheel of fortune relevant for this part is only green. This means, you will receive
             {{Constants.control_payoff|c}} for sure as an additional bonus, if this part is chosen at the end of the experiment as the
-            payoff relevant part.
+            part relevant for the determination of your bonus.
 
 
             {% endif %}
             {% if player.treatment == 'ambiguity' %}
-            In this part we will not tell you which of the wheels will be payoff relevant. For this reason, the
+            In this part we will not tell you which of the wheels will be relevant for the determination of your bonus. For this reason, the
             probabilities
             for winning and losing are unknown. They are somewhere between 1% and 99%. This means, the chance to win
             {{Constants.max_payoff|c}} as an additional bonus is between 1%-99% if this part is chosen at the end of the experiment as the
-            payoff relevant part.
+            part relevant for the determination of your bonus.
             {% endif %}
 
         </div>

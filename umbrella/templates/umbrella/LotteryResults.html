@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-Payoff screen
+Bonus payment
 {% endblock %}
 
 {% block content %}
@@ -13,14 +13,14 @@ Payoff screen
 <ul class="list-group list-group-flush my-3">
     <li class="list-group-item">
       As stated at the beginning, for each part you faced an additional lottery. It was randomly determined that the
-lottery from part {{participant.vars.payable_round}} is payoff relevant. Here you see this lottery’s outcome.
+lottery from part {{participant.vars.payable_round}} is  relevant for the determination of your bonus. Here you see this lottery’s outcome.
 
     </li>
     <li class="list-group-item">
     {% include 'umbrella/includes/singlecircle.html' with result=True risk=player.payable_risk lottery_outcome=player.payable_lottery_outcome  cover=False %}</li>
       <li class="list-group-item ">
    
-       Thus your payoff from this additional lottery  is <b>{{player.background_payoff }}</b>.
+       Thus your bonus from this additional lottery  is <b>{{player.background_payoff }}</b>.
 
     </li>
     <li class="list-group-item">
@@ -30,13 +30,13 @@ lottery from part {{participant.vars.payable_round}} is payoff relevant. Here yo
     </li>
     <li class="list-group-item ">
    
-       Your payoff from this task is <b>{{player.felix_payoff}}</b>.
+       Your bonus from this task is <b>{{player.felix_payoff}}</b>.
 
     </li>
 
     <li class="list-group-item font-weight-bold ">
    
-        Hence, your final payoff is: {{player.payoff}}.
+        Hence, your total bonus is: {{player.payoff}}.
 
     </li>
 </ul>

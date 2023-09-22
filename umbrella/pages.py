@@ -3,8 +3,8 @@ from ._builtin import Page as oTreePage, WaitPage
 from .models import Constants
 from . import gamepages
 from pprint import pprint
-SECTIONS = ["Instructions", "Part 1", "Part 2", "Payoff Screen"]
-SUBSECTIONS=['Intro', 'Task A', 'Task B', 'Task C' ,'Task D']
+SECTIONS = ["Instructions", "Part 1", "Part 2", "Bonus Payment Screen"]
+SUBSECTIONS=['Intro', 'Task A', 'Task B', 'Task C' ,]
 
 class PartMixin:
     show_subsections=True
@@ -42,6 +42,7 @@ class Page(oTreePage):
 
 
 class SecondPage(PartMixin,Page):
+    wheel = True
     active_section = "Instructions"
     active_subsection='Intro'
     pass
@@ -172,6 +173,7 @@ class OverallQuiz(Page):
 
 
 class QuizForTreatment(PartMixin,Page):
+    wheel = True
     instructions = True
     active_subsection='Intro'
     def instructions_path(self):
@@ -186,7 +188,7 @@ class EndOfPart(PartMixin,Page):
     pass
     
 class LotteryResults( Page):
-    active_section = "Payoff Screen"
+    active_section = "Bonus Payment Screen"
     def vars_for_template(self):
         # TODO: it's stupid but for now let's do it right here for debuggin reasons.
         # TODO: let's move it later to P4's BNP
@@ -211,8 +213,8 @@ page_sequence = [
     P2,
     InstructionsP3,
     P3,
-    InstructionsP4,
-    P4,
+    # InstructionsP4,
+    # P4,
     EndOfPart,
     LotteryResults,
 ]
