@@ -4,7 +4,7 @@ from .models import Constants
 from . import gamepages
 from pprint import pprint
 SECTIONS = ["Instructions", "Part 1", "Part 2", "Bonus Payment Screen"]
-SUBSECTIONS=['Intro', 'Task A', 'Task B', 'Task C' ,]
+SUBSECTIONS=['Intro', 'Task 1', 'Task 2', 'Task 3' ,]
 
 class PartMixin:
     show_subsections=True
@@ -97,32 +97,32 @@ class GeneralTask(_InnerTask):
 
 
 class InstructionsP1(GeneralInstructions):
-    active_subsection='Task A'
+    active_subsection='Task 1'
     num_task = 1
 
 
 class P1(GeneralTask):
-    active_subsection='Task A'
+    active_subsection='Task 1'
     num_task = 1
 
 
 class InstructionsP2(GeneralInstructions):
-    active_subsection='Task B'
+    active_subsection='Task 2'
     num_task = 2
 
 
 class P2(GeneralTask):
-    active_subsection='Task B'
+    active_subsection='Task 2'
     num_task = 2
 
 
 class InstructionsP3(GeneralInstructions):
-    active_subsection='Task C'
+    active_subsection='Task 3'
     num_task = 3
 
 
 class P3(GeneralTask):
-    active_subsection='Task C'
+    active_subsection='Task 3'
     num_task = 3
 
 class InstructionsP4(GeneralInstructions):

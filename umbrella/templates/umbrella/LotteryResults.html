@@ -20,7 +20,7 @@ lottery from part {{participant.vars.payable_round}} is  relevant for the determ
     {% include 'umbrella/includes/singlecircle.html' with result=True risk=player.payable_risk lottery_outcome=player.payable_lottery_outcome  cover=False %}</li>
       <li class="list-group-item ">
    
-       Thus your bonus from this additional lottery  is <b>{{player.background_payoff }}</b>.
+       Thus your bonus from this additional lottery  is <b>{{player.background_payoff|c }}</b>.
 
     </li>
     <li class="list-group-item">
