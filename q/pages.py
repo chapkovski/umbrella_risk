@@ -1,4 +1,5 @@
 from otree.api import Currency as c, currency_range
+from django.shortcuts import redirect
 from ._builtin import Page, WaitPage
 from .models import Constants
 import json
@@ -37,9 +38,23 @@ class Big5(Page):
 class Feedback(Page):
     form_model='player'
     form_fields=['feedback']
+class FinalForProlific(Page):
+    def is_displayed(self):
+        return (
+            self.session.config.get("for_prolific")
+            and self.round_number == Constants.num_rounds
+        )
+
+    def get(self):
+        full_return_url = self.session.vars.get("prolific_return_url")
+        if full_return_url:
+            return redirect(full_return_url)
+        FALLBACK_URL = "https://cnn.com"
+        return redirect(FALLBACK_URL)
 
 page_sequence = [
     Q,
     Big5,
     Feedback,
+    FinalForProlific,
     ]
