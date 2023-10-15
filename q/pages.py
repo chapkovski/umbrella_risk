@@ -46,7 +46,7 @@ class FinalForProlific(Page):
         )
 
     def get(self):
-        full_return_url = self.session.vars.get("prolific_return_url")
+        full_return_url = self.session.config.get("prolific_return_url")
         if full_return_url:
             return redirect(full_return_url)
         FALLBACK_URL = "https://cnn.com"

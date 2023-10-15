@@ -32,7 +32,7 @@ SESSION_CONFIGS = [
 SESSION_CONFIG_DEFAULTS = dict(
     prolific_return_url="https://app.prolific.com/submissions/complete?cc=NO_CODE",
     for_prolific=True,
-    real_world_currency_per_point=1.00, participation_fee=4.00, doc="",
+    real_world_currency_per_point=1.00, participation_fee=0, doc="",
     risk=50
 )
 
