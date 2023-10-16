@@ -201,12 +201,12 @@ class LotteryResults( Page):
 
 
 page_sequence = [
-    # ConsentPage,
-    # OverallInstructions,
-    # OverallQuiz,
-    # FirstPage,
-    # SecondPage,
-    # QuizForTreatment,
+    ConsentPage,
+    OverallInstructions,
+    OverallQuiz,
+    FirstPage,
+    SecondPage,
+    QuizForTreatment,
     InstructionsP1,
     P1,
     InstructionsP2,
