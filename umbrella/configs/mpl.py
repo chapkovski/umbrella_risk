@@ -1,6 +1,8 @@
 # <imports>
 from otree.api import Currency as c
 from otree.constants import BaseConstants
+from django.conf import settings
+COEF = settings.COEF
 # </imports>
 
 
@@ -17,7 +19,7 @@ class Constants(BaseConstants):
     # "high" and "low" outcomes (in currency units set in settings.py) of "lottery A" and "lottery B"
     # note that payoffs are identical for all choices and only probabilities of "high" and "low" outcomes change
     ### Holzmeister & Stefan used a scaling of H+L (2006) * 5 we used half of that, which is scaling it by 2.5
-    scale=2.5
+    scale=2.5/COEF
     lottery_a_hi = 5/scale # 10.00
     lottery_a_lo = 4/scale # 8.00
     lottery_b_hi = 9.625/scale #19.25

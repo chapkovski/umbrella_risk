@@ -1,12 +1,15 @@
 # <imports>
 from otree.api import Currency as cu
 from otree.constants import BaseConstants
+from django.conf import settings
+COEF = settings.COEF
 # </imports>
 
 
 # ******************************************************************************************************************** #
 # *** CLASS CONSTANTS *** #
 # ******************************************************************************************************************** #
+
 class Constants(BaseConstants):
 
     # ---------------------------------------------------------------------------------------------------------------- #
@@ -30,8 +33,8 @@ class Constants(BaseConstants):
     # for subsequent choices <i>, the high lottery outcome is determined by <lottery_hi> + <i-1> * <step_size>
     # if <variation = 'lottery_lo'>, <lottery_lo> constitutes the low lottery payoff for the first choice
     # for subsequent choices <i>, the high lottery outcome is determined by <lottery_lo> - <i-1> * <step_size>
-    lottery_hi = 7.5/2.5 #15.00
-    lottery_lo = 2.5/2.5 #5.00
+    lottery_hi = (7.5/2.5)*COEF #15.00
+    lottery_lo = (2.5/2.5)*COEF #5.00
 
     # probability of lottery outcome "high" in %
     # the probability of lottery payoffs is constant if <variation = 'sure_payoff'> or <variation = 'lottery_*'>
@@ -43,7 +46,7 @@ class Constants(BaseConstants):
     # the sure payoff remains constant if <variation = 'probability'> or <variation = 'lottery_*'>
     # if <variation = 'sure_payoff'>, <sure_payoff> constitutes the certain payment ("option B") in the first choice
     # for subsequent choices <i>, the certain payment is determined by <sure_payoff> + <i-1> * <step_size>
-    sure_payoff = 1 #5.00
+    sure_payoff = 1*COEF #5.00
 
     # step size (in units of the parameter defined in <variation>)
     # the variable <variation> defines which of the four parameters is varied across the <num_choices> choices
@@ -51,7 +54,7 @@ class Constants(BaseConstants):
     # thus, the varying parameter for choice i = 1, 2, ..., n, <var_i>, is defined by <var> + <i-1> * <step_size>
     # if <variation> is set to 'sure_payoff', 'lottery_hi', or 'lottery_lo', <step_size> is in currency units
     # if <variation> is set to 'probability', <step_size> is in percentage units (i.e. <step_size>%)
-    step_size = 1.25/2.5
+    step_size = (1.25/5)*COEF
 
     # initial endowment (in currency units set in settings.py)
     # <endowment> defines an additional endowment for the task to capture potential losses if <variation = lottery_lo>

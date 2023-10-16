@@ -19,7 +19,7 @@ def creating_session(self):
             # ----------------------------------------------------------------------------------------------------
             if Constants.percentage:
                 probabilities = [
-                    "{0:.2f}".format(k / n * 100) + "%"
+                    "{0:.0f}".format(k / n * 100) + "%"
                     for k in indices
                 ]
             else:

@@ -12,7 +12,7 @@ from .configs.cem import Constants as CEM_Constants
 from .configs.mpl import Constants as MPL_Constants
 import random
 import json
-import itertools
+from django.conf import settings
 from umbrella import session_creator
 
 author = "Philipp Chapkovski, WZB"
@@ -20,14 +20,14 @@ author = "Philipp Chapkovski, WZB"
 doc = """
 Umbrella app for several risk measures
 """
-
+COEF=settings.COEF
 
 class Constants(BaseConstants):
     name_in_url = "umbrella"
     players_per_group = None
     num_rounds = 2
-    control_win = 2
-    risk_win = 4
+    control_win = 2*COEF
+    risk_win = 4*COEF
     control_payoff = c(control_win)
     max_payoff = c(risk_win)
     TREATMENTS = ["risk", "ambiguity", "control"]

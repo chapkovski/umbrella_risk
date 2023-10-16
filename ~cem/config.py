@@ -1,6 +1,8 @@
 # <imports>
 from otree.api import Currency as cu
 from otree.constants import BaseConstants
+from django.conf import settings
+COEF = settings.COEF
 # </imports>
 
 
@@ -30,8 +32,8 @@ class Constants(BaseConstants):
     # for subsequent choices <i>, the high lottery outcome is determined by <lottery_hi> + <i-1> * <step_size>
     # if <variation = 'lottery_lo'>, <lottery_lo> constitutes the low lottery payoff for the first choice
     # for subsequent choices <i>, the high lottery outcome is determined by <lottery_lo> - <i-1> * <step_size>
-    lottery_hi = 3 #15.00
-    lottery_lo = 1 #5.00
+    lottery_hi = 3*COEF #15.00
+    lottery_lo = 1*COEF #5.00
 
     # probability of lottery outcome "high" in %
     # the probability of lottery payoffs is constant if <variation = 'sure_payoff'> or <variation = 'lottery_*'>

@@ -1,5 +1,6 @@
 from otree.constants import BaseConstants
-
+from django.conf import settings
+COEF = settings.COEF
 
 # ******************************************************************************************************************** #
 # *** CLASS CONSTANTS *** #
@@ -16,13 +17,13 @@ class Constants(BaseConstants):
     # sure_payoff; "low" and "high" payoff of the initial lottery (in currency units set in settings.py)
     # <sure_payoff> determines the 'starting point' for all lotteries in the single choice list (safe option in i = 1)
     # outcomes of subsequent lotteries are defined relative to the 'initial value' by the <delta> options below
-    sure_payoff = 2  # 9.00
+    sure_payoff = 2*COEF  # 9.00
 
     # increments of lottery outcomes (refer to the documentation for more detailed information)
     # <delta_lo> defines the (negative) increment of the low outcome over the number of choices (<num_lotteries>)
     # similarly, <delta_hi> defines the (positive) increment of the high outcome for the <num_lotteries> choices
-    delta_lo = .75/2.25 #1.50
-    delta_hi = 1.5/2.25 #3.00
+    delta_lo = (.75/2.25)*COEF #1.50
+    delta_hi = (1.5/2.25)*COEF #3.00
 
     # probability of lottery outcome "high" (in percent)
     # <probability> refers to the likelihood of outcome <lottery_hi> denoted in percent (as Integer or Float)
