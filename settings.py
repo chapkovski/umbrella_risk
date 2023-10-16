@@ -1,5 +1,5 @@
 from os import environ
-COEF =  .5
+COEF =  environ.get("GAMECOEF", .5)
 app_seq = [
 
     'umbrella',
