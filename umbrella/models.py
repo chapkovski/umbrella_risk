@@ -73,10 +73,8 @@ class Subsession(BaseSubsession):
                 p.vars["appseq"] = apps
                 p.vars["payable_app"] = random.choice(apps)
                 p.vars["payable_task_num"] = apps.index(p.vars["payable_app"]) + 1
-                # p.vars['payable_round'] = random.randint(1, Constants.num_rounds)
-                p.vars[
-                    "payable_round"
-                ] = 1  # TODO!!!! NB!!!! remove - just for deebugging
+                p.vars['payable_round'] = random.randint(1, Constants.num_rounds)
+
                 p.vars["lottery_outcome"] = random.uniform(0, 360)
 
         for p in self.get_players():
