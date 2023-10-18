@@ -65,6 +65,8 @@ class Subsession(BaseSubsession):
             len_treat_comb = len(Constants.TREATMENTS)
             for i, p in enumerate(self.session.get_participants()):
                 _id = i % len_treat_comb
+                if self.session.config.get('fixed_treatment') > -1:
+                    _id = self.session.config.get('fixed_treatment')
                 p.vars["treatment_set"] = Constants.TREATMENTS[_id]
 
                 p.vars["treatments"] = p.vars["treatment_set"]["treatments"]
